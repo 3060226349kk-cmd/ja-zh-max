@@ -285,6 +285,8 @@ jp-zh-max/
 
 ## 致谢
 
+**项目作者：** [Lilipuut](https://github.com/3060226349kk-cmd) — jp-zh-max 整体架构设计、方法论集成与实现。
+
 本 skill 的基本框架源自 [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish)（英汉翻译打磨），在其 7 阶段工作流基础上扩展为日汉翻译专用版。感谢原技能的架构设计。
 
 书中 20 个翻译技能的蒸馏提取通过 [cangjie-skill](https://github.com/3060226349kk-cmd/cangjie-skill) 的 book2skill 管线完成。
@@ -586,6 +588,8 @@ Contributions are welcome. The following guidelines explain the project structur
 ---
 
 ## Acknowledgements
+
+**Author:** [Lilipuut](https://github.com/3060226349kk-cmd) — overall architecture design, methodology integration, and implementation of jp-zh-max.
 
 The skill's base framework derives from [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish), an English→Chinese translation polish skill. The original 7-stage workflow was expanded into a Japanese→Chinese specific edition.
 
