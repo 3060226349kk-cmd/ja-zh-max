@@ -7,7 +7,7 @@
 [🇨🇳 中文](#jp-zh-max--日译汉翻译润色-claude-code-skill) · [🇬🇧 English](#jp-zh-max--japanese→chinese-translation-polish-for-claude-code)
 
 > 日文→中文翻译与润色。9 阶段工作流 + 高宁《日汉翻译教程》20 个蒸馏技能 + 4 层校验链。
-> 专为 Claude Code 设计，输出日中对照译文。译文质量超群，AI无法确认是机翻还是真人翻译，硬核书类通常比真人翻译版本要通顺。译文风格偏白，没有允许翻译“话外音”，自由发挥。定义为标准直译
+> 专为 Claude Code 设计，输出日中对照译文。译文质量超群，AI无法确认是机翻还是真人翻译，硬核书类通常比真人翻译版本通顺。译文风格偏白，定义为标准直译
 >
 > 📊 [完整工作流流程图（含校验链）](ultra/WORKFLOW.md)
 
