@@ -216,6 +216,23 @@ pip install playwright && python3 -m playwright install chromium
 # 修改 references/output-formats.md 中的 KINDLEGEN 变量指向你的实际安装路径
 ```
 
+### 所需 Skill 依赖
+
+本 skill 的校验链和方法论依赖以下 Claude Code skill（均从 GitHub 安装）：
+
+| Skill | 仓库 | 用途 | 安装方式 |
+|-------|------|------|---------|
+| [superpowers](https://github.com/3060226349kk-cmd/superpowers) | `3060226349kk-cmd/superpowers` | 校验链步骤：`verification-before-completion` | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/superpowers.git` |
+| [scribe](https://github.com/3060226349kk-cmd/scribe) | `3060226349kk-cmd/scribe` | 校验链步骤：`scribe:prose-reviewer`（AI 腔/翻译腔审查） | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/scribe.git` |
+| [humanizer](https://github.com/3060226349kk-cmd/humanizer) | `3060226349kk-cmd/humanizer` | 校验链步骤：四维验证（Fidelity / Naturalness / Grammar / AI Patterns）+ 强制对抗自审 | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/humanizer.git` |
+| [humanizer-zh](https://github.com/3060226349kk-cmd/humanizer-zh) | `3060226349kk-cmd/humanizer-zh` | 校验链步骤：中文 AI 痕迹终审（24 条规则） | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/humanizer-zh.git` |
+| [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish) | `3060226349kk-cmd/en-zh-translation-polish` | 本 skill 工作流框架的基础（7 阶段英译汉管线） | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/en-zh-translation-polish.git` |
+| [cangjie-skill](https://github.com/3060226349kk-cmd/cangjie-skill) | `3060226349kk-cmd/cangjie-skill` | 高宁 20 个翻译技能的 book2skill 蒸馏管线 | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/cangjie-skill.git` |
+
+> jp-zh-max 的工作流本身不依赖以上 skill 即可运行基础翻译（阶段 0-6），但校验链（阶段 7）和方法论增强阶段（阶段 -0.5/0/1/2/3/5）需要对应 skill 就位。
+>
+> 安装命令均在 Claude Code skills 目录下执行 `git clone`，与 jp-zh-max 本身的安装方式一致。
+
 ---
 
 ## 快速使用
@@ -545,6 +562,23 @@ pip install playwright && python3 -m playwright install chromium
 # Kindlegen (MOBI) — installed via Kindle Previewer 3; update KINDLEGEN path
 # in references/output-formats.md to match your installation
 ```
+
+### Required Skills
+
+The validation pipeline and methodology enhancements rely on these Claude Code skills (all installable from GitHub):
+
+| Skill | Repository | Purpose | Install |
+|-------|-----------|---------|---------|
+| [superpowers](https://github.com/3060226349kk-cmd/superpowers) | `3060226349kk-cmd/superpowers` | Validation chain: `verification-before-completion` | `git clone https://github.com/3060226349kk-cmd/superpowers.git` |
+| [scribe](https://github.com/3060226349kk-cmd/scribe) | `3060226349kk-cmd/scribe` | Validation chain: `scribe:prose-reviewer` (AI-isms/translationese audit) | `git clone https://github.com/3060226349kk-cmd/scribe.git` |
+| [humanizer](https://github.com/3060226349kk-cmd/humanizer) | `3060226349kk-cmd/humanizer` | Validation chain: 4-dimension check (Fidelity/Naturalness/Grammar/AI Patterns) + adversarial self-review | `git clone https://github.com/3060226349kk-cmd/humanizer.git` |
+| [humanizer-zh](https://github.com/3060226349kk-cmd/humanizer-zh) | `3060226349kk-cmd/humanizer-zh` | Validation chain: Chinese AI-trace final review (24 rules) | `git clone https://github.com/3060226349kk-cmd/humanizer-zh.git` |
+| [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish) | `3060226349kk-cmd/en-zh-translation-polish` | Base workflow framework (7-stage EN→ZH pipeline) | `git clone https://github.com/3060226349kk-cmd/en-zh-translation-polish.git` |
+| [cangjie-skill](https://github.com/3060226349kk-cmd/cangjie-skill) | `3060226349kk-cmd/cangjie-skill` | book2skill distillation pipeline for Gao Ning's 20 skills | `git clone https://github.com/3060226349kk-cmd/cangjie-skill.git` |
+
+> jp-zh-max's base translation workflow (Phases 0-6) runs without these skills, but the validation chain (Phase 7) and methodology-enhanced phases (-0.5/0/1/2/3/5) require them.
+>
+> All install via `git clone` in `~/.claude/skills/`, same as jp-zh-max itself.
 
 ---
 
