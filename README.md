@@ -7,7 +7,7 @@
 [🇨🇳 中文](#jp-zh-max--日译汉翻译润色-claude-code-skill) · [🇬🇧 English](#jp-zh-max--japanese→chinese-translation-polish-for-claude-code)
 
 > 日文→中文翻译与润色。9 阶段工作流 + 高宁《日汉翻译教程》20 个蒸馏技能 + 4 层校验链。
-> 专为 Claude Code 设计，输出日中对照译文。译文质量超群，AI无法确认是机翻还是真人翻译，硬核书类通常比真人翻译版本通顺。译文风格偏白，定义为标准直译
+> 专为 Claude Code 设计，输出日中对照译文。
 >
 > 📊 [完整工作流流程图（含校验链）](ultra/WORKFLOW.md)
 
@@ -226,8 +226,6 @@ pip install playwright && python3 -m playwright install chromium
 | [scribe](https://github.com/3060226349kk-cmd/scribe) | `3060226349kk-cmd/scribe` | 校验链步骤：`scribe:prose-reviewer`（AI 腔/翻译腔审查） | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/scribe.git` |
 | [humanizer](https://github.com/3060226349kk-cmd/humanizer) | `3060226349kk-cmd/humanizer` | 校验链步骤：四维验证（Fidelity / Naturalness / Grammar / AI Patterns）+ 强制对抗自审 | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/humanizer.git` |
 | [humanizer-zh](https://github.com/3060226349kk-cmd/humanizer-zh) | `3060226349kk-cmd/humanizer-zh` | 校验链步骤：中文 AI 痕迹终审（24 条规则） | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/humanizer-zh.git` |
-| [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish) | `3060226349kk-cmd/en-zh-translation-polish` | 本 skill 工作流框架的基础（7 阶段英译汉管线） | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/en-zh-translation-polish.git` |
-| [cangjie-skill](https://github.com/3060226349kk-cmd/cangjie-skill) | `3060226349kk-cmd/cangjie-skill` | 高宁 20 个翻译技能的 book2skill 蒸馏管线 | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/cangjie-skill.git` |
 
 > jp-zh-max 的工作流本身不依赖以上 skill 即可运行基础翻译（阶段 0-6），但校验链（阶段 7）和方法论增强阶段（阶段 -0.5/0/1/2/3/5）需要对应 skill 就位。
 >
@@ -573,8 +571,6 @@ The validation pipeline and methodology enhancements rely on these Claude Code s
 | [scribe](https://github.com/3060226349kk-cmd/scribe) | `3060226349kk-cmd/scribe` | Validation chain: `scribe:prose-reviewer` (AI-isms/translationese audit) | `git clone https://github.com/3060226349kk-cmd/scribe.git` |
 | [humanizer](https://github.com/3060226349kk-cmd/humanizer) | `3060226349kk-cmd/humanizer` | Validation chain: 4-dimension check (Fidelity/Naturalness/Grammar/AI Patterns) + adversarial self-review | `git clone https://github.com/3060226349kk-cmd/humanizer.git` |
 | [humanizer-zh](https://github.com/3060226349kk-cmd/humanizer-zh) | `3060226349kk-cmd/humanizer-zh` | Validation chain: Chinese AI-trace final review (24 rules) | `git clone https://github.com/3060226349kk-cmd/humanizer-zh.git` |
-| [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish) | `3060226349kk-cmd/en-zh-translation-polish` | Base workflow framework (7-stage EN→ZH pipeline) | `git clone https://github.com/3060226349kk-cmd/en-zh-translation-polish.git` |
-| [cangjie-skill](https://github.com/3060226349kk-cmd/cangjie-skill) | `3060226349kk-cmd/cangjie-skill` | book2skill distillation pipeline for Gao Ning's 20 skills | `git clone https://github.com/3060226349kk-cmd/cangjie-skill.git` |
 
 > jp-zh-max's base translation workflow (Phases 0-6) runs without these skills, but the validation chain (Phase 7) and methodology-enhanced phases (-0.5/0/1/2/3/5) require them.
 >
