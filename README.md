@@ -65,7 +65,8 @@ jp-zh-max/
 ├── LICENSE                                 # MIT License
 ├── .gitignore
 ├── ultra/
-│   └── SKILL_MAP.md                        # Ultra 增强技能映射表
+│   ├── SKILL_MAP.md                        # Ultra 增强技能映射表
+│   └── WORKFLOW.md                         # 翻译工作流流程图（含校验链）
 ├── references/
 │   ├── claude-code-deployment.md           # Claude Code 部署
 │   ├── japanese-techniques.md              # 日语翻译技法
