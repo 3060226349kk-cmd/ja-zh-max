@@ -293,6 +293,8 @@ jp-zh-max/
 
 特别鸣谢 **高宁** 教授——《日汉翻译教程》（上海外语教育出版社，2008）为整套方法论提供了系统理论基石。本书的翻译意识论、语境分析框架、文体三层分析、缩扩句法与后推法等核心概念，构成了本 skill 每个阶段的学理支撑。
 
+校验链中的 `verification-before-completion` 步骤来自 [Superpowers](https://github.com/3060226349kk-cmd/superpowers) 技能集、`scribe:prose-reviewer` 来自 [scribe](https://github.com/3060226349kk-cmd/scribe)、`humanizer` 与 `humanizer-zh` 为独立校验管线。感谢各技能的开放架构。
+
 ## 许可
 
 MIT License — 详见 [LICENSE](LICENSE)。
@@ -596,6 +598,8 @@ The skill's base framework derives from [en-zh-translation-polish](https://githu
 Distillation of the 20 textbook skills was performed via the book2skill pipeline in [cangjie-skill](https://github.com/3060226349kk-cmd/cangjie-skill).
 
 Special thanks to **Prof. Gao Ning**—his *Japanese-Chinese Translation Course* (上海外语教育出版社, 2008) provides the systematic theoretical foundation for this skill's methodology. The book's translation consciousness theory, context analysis framework, three-layer style analysis, contraction-expansion syntax, and backward-propagation method constitute the scholarly backbone of every phase in this skill.
+
+The validation pipeline's `verification-before-completion` step is powered by [Superpowers](https://github.com/3060226349kk-cmd/superpowers), `scribe:prose-reviewer` by [scribe](https://github.com/3060226349kk-cmd/scribe), and `humanizer`/`humanizer-zh` by their respective validation skills. Thanks to each project's open architecture.
 
 ## License
 
