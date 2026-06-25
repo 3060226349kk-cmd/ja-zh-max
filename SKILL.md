@@ -1,21 +1,33 @@
 ---
-name: ja-zh-translation-polish
+name: jp-zh-max
 description: >-
-  把日文译成地道中文并产出日中对译对照。去掉翻译腔（翻訳調）、发挥汉语意合优势。
-  当用户要求日译中 / 日译汉 / 日语翻译 / 日文翻译 / 去翻译腔 / 润色译文 /
-  日中对译对照 / 日文转中文 / 日语成中文 / 翻一下这段日文 / 帮我翻日文 /
-  日文翻成中文 / 翻译这段日语 / 读一下这段日文 / Japanese to Chinese /
-  translate Japanese / 翻訳 / 日本語を中国語に翻訳 时使用。也适用于
-  日文小说/论文/新闻/商务文件等成篇翻译。不适用于中译日、纯中文写作润色、或单词查译。
+  Use when the user wants 日译中 / 日译汉 / Japanese to Chinese / translate
+  Japanese, or to polish translationese out of a Chinese draft. Also when
+  producing 日中对译 bilingual output, or translating full-length Japanese
+  books/articles/news. Not for 中译日, pure Chinese writing polish, or
+  single-word lookups. Light edition: jp-zh.
 license: MIT
-version: 2.3.0
-tags: [translation, japanese, japanese-to-chinese, 日译汉, 日译中, 润色, 日中对译, localization]
+version: 3.2.0
+tags: [translation, japanese, japanese-to-chinese, 日译汉, 日译中, 润色, 日中对译, localization, ultra]
 allowed-tools: Read Write Edit Bash
 ---
 
-# 日译汉翻译润色 (Japanese→Chinese Translate & Polish)
+# jp-zh-max · 日译汉翻译润色（Ultra 增强版）
 
-把日文译成**地道中文**并产出**日中对译**译文。核心方法论基于高宁《日汉翻译教程》（上海外语教育出版社，2008）的系统理论，并继承叶子南英译汉框架的 7 阶段工作流。**日→中最致命的错误是把日语的 SOV 形合结构、连体修饰长链、和製漢語字形直接迁移进汉语造成翻译腔**。好译文 = **以读者为中心、按文本类型调节归化尺度、发挥汉语意合优势、兼顾音韵节奏**。
+> **⚡ jp-zh-max = jp-zh + 《日汉翻译教程》20 个蒸馏技能**
+>
+> 本 skill 是 [jp-zh](../jp-zh/SKILL.md) 的 ultra 增强版。原版 9 阶段工作流完全保留，
+> 在此基础上集成了高宁《日汉翻译教程》(上外教社, 2008) 经 book2skill 蒸馏的 20 个技能。
+> 详见 [设计文档](../../../docs/superpowers/specs/2026-06-25-jp-zh-ultra-integration-design.md)
+> 和 [ultra 技能索引](../jp-zh-ultra/INDEX.md)。
+>
+> **双版本选择：**
+> - **jp-zh** — 轻量版，9 阶段工作流，适合短篇翻译（< 2,000 字）或快速出稿
+> - **jp-zh-max**（本 skill）— ultra 增强版，每个阶段有方法论技能加持，适合章节级以上全文翻译
+>
+> **不适用场景（跳回 jp-zh）：** 聊天小段翻译 / 硬文本（法律/专利，自由度 1-3）/ 用户要求快速出稿
+
+把日文译成**地道中文**并产出**日中对译**译文。核心方法论基于高宁《日汉翻译教程》（上海外语教育出版社，2008）的系统理论，并继承叶子南英译汉框架的 7 阶段工作流。**统领原则：读者中心**——每个翻译决策最终追溯到一个问题：「这个中文读者是谁，在什么语境下读？」。日→中最致命的错误是把日语的 SOV 形合结构、连体修饰长链、和製漢語字形直接迁移进汉语造成翻译腔。好译文 = **以读者为中心、按文本类型调节归化尺度、发挥汉语意合优势、兼顾音韵节奏**。
 
 ## 方法论基石（高宁，绪论·第三章）
 
@@ -44,244 +56,113 @@ allowed-tools: Read Write Edit Bash
 
 ## 交付物
 
-默认产出**两种格式**文件，**不生成 PDF**：
+1. **`<名称> 翻译(日中对照).md`** — 唯一真源。日文原文 blockquote (`> `)，紧跟中文译文。
+2. **`<名称> 翻译(日中对照).html`** — 暖纸质感排版（Warm Paper）。学习/试卷类用 `--theme navy`。
+3. （按需）**`<名称> 翻译(全中文).md`** — 脚本派生（删 `> ` 行），不重打。
 
-1. **`<名称> 翻译(日中对照).md`** — 唯一真源。每段**日文原文作为 blockquote (`> `)**，紧跟其下是中文译文。
-2. **`<名称> 翻译(日中对照).html`** — 暖纸质感排版（Warm Paper），米白暖纸底色、宋体系列正文，适合长文阅读。**仅在学习/试卷类内容时使用海军蓝（见下文 `--theme navy`）。**
-3. （按需）**`<名称> 翻译(全中文).md`** — 脱离对照文件**用脚本机械派生**（删掉 `> ` 行），不要重打中文。
-
-   **Windows (git-bash) 使用此脚本：**
-   ```bash
-   python3 -c "
-   import re
-   src = r'<名称> 翻译(日中对照).md'
-   dst = r'<名称> 翻译(全中文).md'
-   lines = open(src, encoding='utf-8').read().split('\n')
-   kept = [ln for ln in lines if not ln.lstrip().startswith('>')]
-   open(dst, 'w', encoding='utf-8').write(re.sub(r'\n{3,}', '\n\n', '\n'.join(kept)).strip() + '\n')
-   "
-   ```
-
-   > ⚠ 顺序要求：**先跑阶段 6 的标点归一 + 再跑 PDF 生成，最后派生全中文版**——派生脚本原样继承标点，不会再纠正。
-
-若输入只是聊天里的一小段（几句话），直接在回复里给对照即可，不必落盘；成篇文章或用户指明保存才写文件。目标文件已存在则更新而非新建。
+若聊天小段翻译直接在回复给对照，不必落盘。
 
 ### 全文翻译（书籍级交付）
 
-当翻译内容为整本书籍时，默认产出以下格式：
-- **MD（日中对照）** — 唯一真源
-- **HTML（日中对照）** — 网页阅读版
-- **MOBI** — Kindle 电子书格式
-- **EPUB（纯中文）** — 仅中文译文单语
-
-PDF **仅在用户明确指定时按需生成**，不自动产出。
-
-### 输出 EPUB（纯中文单语 ★ 全文翻译时按需）
-
-翻译完成后（纯中文内容），用 ebooklib 生成 EPUB：
-
-```bash
-python3 -c "
-import os
-from ebooklib import epub
-
-book = epub.EpubBook()
-book.set_identifier('your-book-id')
-book.set_title('《书名》')
-book.set_language('zh-CN')
-
-md_path = r'《书名》 翻译(全中文).md'
-with open(md_path, encoding='utf-8') as f:
-    content = f.read()
-
-chapters = content.split('## ')
-for i, ch in enumerate(chapters):
-    if not ch.strip(): continue
-    lines = ch.strip().split('\n')
-    title = lines[0].strip()
-    body = '\n'.join(lines[1:]).strip()
-    if not title: continue
-    c = epub.EpubHtml(title=title, file_name=f'chap_{i}.xhtml', lang='zh-CN')
-    c.content = f'<h2>{title}</h2><p>' + '</p><p>'.join(body.split('\n\n')) + '</p>'
-    book.add_item(c)
-    book.toc.append(c)
-    book.spine.append(c)
-
-style = 'body { font-family: serif; line-height: 1.8; padding: 1em; }'
-nav_css = epub.EpubItem(uid='style', file_name='style.css', media_type='text/css', content=style.encode('utf-8'))
-book.add_item(nav_css)
-for item in book.items:
-    if isinstance(item, epub.EpubHtml):
-        item.add_item(nav_css)
-
-epub_path = r'《书名》 译文.epub'
-epub.write_epub(epub_path, book, {})
-print(f'EPUB => {epub_path}')
-"
-```
-
-生成后如需 MOBI，用 kindlegen 转换（见下方「输出 MOBI 电子书」）。
+额外产出 EPUB + MOBI。PDF 仅按需。派生脚本详见 **[`references/output-formats.md`](references/output-formats.md)**。
 
 ### 阶段 -1 — 项目目录初始化 ★ 任何文件操作前强制执行
 
-**这是工作流第零步，优先级高于阶段 0（文本分析）。翻译开始前必须走完以下 4 个步骤，缺一不可。**
+> 仅全文翻译时执行。聊天小段翻译跳过。
 
-#### 步骤 1：创建项目目录与子目录
+⚠ **准入：** 用户已提供待翻译内容。无输入 = 退回用户索取。
+✅ **准出：** `source/` 目录存在、原始文件已移入、提取产物已生成、归位验证通过。
 
-```python
-import os, shutil
+完整步骤（目录创建、文件移动、格式提取、归位验证）见 **[`references/project-init.md`](references/project-init.md)**。
 
-# 确定源文件所在目录（通常是 Downloads）
-src_dir = r'C:\Users\Lilipuut\Downloads'
-book_name = '《项目书籍名称》'           # ← 替换为实际书名
-project_dir = os.path.join(src_dir, book_name)
-source_dir = os.path.join(project_dir, 'source')
-bilingual_dir = os.path.join(project_dir, 'bilingual')
+PDF/MOBI 等派生脚本见 **[`references/output-formats.md`](references/output-formats.md)**。
 
-os.makedirs(source_dir, exist_ok=True)
-os.makedirs(bilingual_dir, exist_ok=True)
-```
+### 超长文本并行翻译（完整管线）
 
-#### 步骤 2：将原始电子书移入 source/
+当单篇翻译量超过 5,000 字时，按章节/幕次切割为若干独立子任务并行翻译。
 
-```python
-# 找到原始电子书文件（epub/mobi/azw3/pdf/docx），移入 source/
-original_file = os.path.join(src_dir, '原书名.epub')   # ← 替换为实际文件名
-target_path = os.path.join(source_dir, os.path.basename(original_file))
-shutil.move(original_file, target_path)
-print(f'原始ファイルを移動しました: {target_path}')
-```
+#### 阶段 A — 子代理并行翻译
 
-> ⚠ **必须用 `shutil.move`（移动），不是 `shutil.copy`（复制）。** 移动后源文件所在目录的根层级不应残留原始电子书。如原始文件在子目录中（如 `Downloads/某文件夹/書名.epub`），同样移入 `source/`。
+1. **统一前置**：编写术语映射表 + 翻译原则，每个子代理的 `context` 中引用
+2. 各子代理独立执行**阶段 0–5**（文本分析 → 理解脱壳 → 初译 → 润色诊断 → 音韵打磨 → 质检），每段标 `[v3·Q✓]`
+3. 子代理产出写入 `bilingual/` 目录
+4. 分割策略、委托代码、风险缓解等详见 en-zh 的 `references/parallel-delegation.md`（通用部分适用）
 
-#### 步骤 3：从 source/ 内的文件提取文本
+#### 阶段 B — 集成
 
-所有提取/转换操作以 `source_dir` 内的文件为输入，提取产物也写入 `source_dir`。**禁止**直接从 Downloads 根目录的文件提取——先移后提。
+子代理全部返回后，按顺序执行：
 
-```python
-# 示例：从 EPUB 提取 XHTML 文本（产物写入 source/）
-import zipfile, re, html
+1. **清理输出格式**（删除子代理自加的标题行、脚注、多余分隔线）
+2. **合并为单一 MD**
+3. **阶段 6 — 日文标点/約物规范化**（`scripts/normalize-punctuation-ja.py`，残留必须 = 0）
 
-epub_path = os.path.join(source_dir, '原书名.epub')
-z = zipfile.ZipFile(epub_path)
-for name in z.namelist():
-    if name.endswith('.xhtml'):
-        text = z.read(name).decode('utf-8')
-        text = re.sub(r'<style[^>]*>.*?</style>', '', text, flags=re.DOTALL)
-        text = re.sub(r'<[^>]+>', '', text)
-        text = html.unescape(text)
-        fname = os.path.basename(name).replace('.xhtml', '.txt')
-        with open(os.path.join(source_dir, fname), 'w', encoding='utf-8') as f:
-            f.write(text.strip())
-```
+#### 阶段 C — 整书校验链 ★ 并行翻译专属·不可跳过
 
-其他格式的提取命令同样以 `source_dir` 内的文件为输入：
-- **`.epub`** → Python `zipfile` 提取 XHTML
-- **`.docx` / `.html` / `.md`** → Pandoc（`C:\\pandoc-3.9\\pandoc.exe -t plain -o "source/出力.txt" "source/入力ファイル"`）
-- **`.azw3`** → Calibre ebook-convert
-- **`.mobi`** → Python `mobi` 模块
-- **`.pdf`** → PyMuPDF（`fitz`）提取文字层，或 `marker-pdf` OCR（扫描件）
+合并后的**整书译文**必须通过完整校验链（= 阶段 7）：
 
-#### 步骤 4：归位验证 ★ 落盘前必检
+4. **`scribe:prose-reviewer`** — 整书级 AI 腔/翻译腔/语感漂移审查
+5. **`superpowers:verification-before-completion`** — 交付物完整性 + 日中对齐验证
+6. **`humanizer`** — 四维验证（Fidelity / Naturalness / Grammar / AI Patterns）+ 强制对抗自审，原位修复
+7. **`humanizer-zh`** — 中文 AI 痕迹终审（24 模），原位修复
 
-```python
-# 验证：原始文件已在 source/ 内，根层级无残留
-root_files = os.listdir(src_dir)
-source_files = os.listdir(source_dir)
+> ⚠ **并行翻译的特殊性**：子代理级质检（阶段 5）只能保证单 chunk 内部正确性。整书级校验链（阶段 C）负责跨 chunk 的**全局一致性**——术语统一、语感连续、AI 模式污染检测。两者互补不可互替。任一步骤未通过 = 翻译未完成。
 
-# 检查 1：原始电子书在 source/ 内
-orig_name = os.path.basename(original_file)
-assert orig_name in source_files, \
-    f'❌ 原始ファイルが source/ に移動されていません：{orig_name}'
+#### 阶段 D — 交付物生成
 
-# 检查 2：根层级无同名残留
-residual = [f for f in root_files if f == orig_name]
-assert len(residual) == 0, f'❌ 原始ファイルがルート階層に残留しています：{residual}'
+校验链全部通过后：
 
-# 检查 3：提取产物无散落（根层级不应出现与书名相关的 txt/md/html）
-extracted = [f for f in root_files
-             if f.endswith(('.txt', '.md', '.html'))
-             and book_name[1:-1] in f]
-assert len(extracted) == 0, f'❌ 抽出ファイルがルート階層に散在しています：{extracted}'
+7. **阶段 8 — 输出交付物**：HTML（暖纸）+ EPUB（纯中文）+ MOBI（全文翻译时）
 
-print('✅ ファイル帰位検証通過')
-```
 
-#### 完成后的目标目录结构
+### 阶段 -0.5 — Ultra 预读取批 ★ jp-zh-max 专属
 
-```
-源文件所在ディレクトリ（例：Downloads）/
-  └── 《プロジェクト書籍名》/
-      ├── source/                          ← 元の電子書籍 + 抽出テキスト/分割ファイル
-      │   ├── 元の書籍.epub                ← 移動した元ファイル
-      │   ├── part01.txt                   ← 抽出物
-      │   └── ...
-      ├── bilingual/                       ← サブエージェントの生出力（並行翻訳時）
-      ├── 《書籍名》 翻译(日中对照).md
-      ├── 《書籍名》 翻译(日中对照).html
-      ├── 《書籍名》 翻译(全中文).md       （オプション、スクリプト派生）
-      ├── 《書籍名》 译文.epub            （全文翻訳時）
-      └── 《書籍名》 译文.mobi            （全文翻訳時）
-```
+> ⚠ **准入：** 阶段 -1 归位验证通过。
+> ✅ **准出：** 14 个 ultra SKILL.md 全部已 Read。未完成 = 停止，不可进入阶段 0。
 
-> PDF は必要に応じて `scripts/bilingual-to-pdf.py` で手動生成。デフォルトのディレクトリ構造には含まれない。
+**目的：** 将《日汉翻译教程》20 个蒸馏技能的完整方法论一次性载入上下文，建立全流程方法论地基。后续各阶段的正式 invoke 在此地基上执行，减少上下文重建成本。
 
-- フォルダ名は中国語書名（例：`《二重生活》`、`《ノルウェイの森》`）
-- **いかなるファイルもソースファイル所在ディレクトリのルート階層に散在させない**——翻訳産物はすべて `project_dir` 内に収める
-- **並行翻訳時**：delegate_task の `context` に正しい `project_dir` パス（例：`C:\Users\Lilipuut\Downloads\《プロジェクト書籍名》`）を渡すこと。サブエージェントに Downloads ルートを渡さない（産物が散逸する）
+**执行：** 用 `Read` 工具依次读取以下 14 个文件（INDEX.md 必须第一个；路径相对 `$SKILL_DIR`）：
 
-### 输出 PDF 封装（按需）
+1. `$SKILL_DIR/../jp-zh-ultra/INDEX.md`
+2. `$SKILL_DIR/../jp-zh-ultra/翻译意识/SKILL.md`
+3. `$SKILL_DIR/../jp-zh-ultra/反孤句原则/SKILL.md`
+4. `$SKILL_DIR/../jp-zh-ultra/审美制约机制/SKILL.md`
+5. `$SKILL_DIR/../jp-zh-ultra/宏观到微观路径/SKILL.md`
+6. `$SKILL_DIR/../jp-zh-ultra/宏观把握微观把握/SKILL.md`
+7. `$SKILL_DIR/../jp-zh-ultra/理解是技巧之母/SKILL.md`
+8. `$SKILL_DIR/../jp-zh-ultra/译得好回归译得对/SKILL.md`
+9. `$SKILL_DIR/../jp-zh-ultra/语境适切原则/SKILL.md`
+10. `$SKILL_DIR/../jp-zh-ultra/大众语境个人语境/SKILL.md`
+11. `$SKILL_DIR/../jp-zh-ultra/辞书活用与词义/SKILL.md`
+12. `$SKILL_DIR/../jp-zh-ultra/理性把握感性把握/SKILL.md`
+13. `$SKILL_DIR/../jp-zh-ultra/缩扩句法/SKILL.md`
+14. `$SKILL_DIR/../jp-zh-ultra/后推法/SKILL.md`
 
-PDF **默认不生成**，仅在用户明确要求时执行。翻译完成后，用 skill 自带的脚本手动生成：
+> ⚠ **批量读取后可继续阶段 0，不必等待逐一确认。** 读取完成 = 本阶段准出满足。
 
-```bash
-python3 "$HOME/.agents/skills/ja-zh-translation-polish/scripts/bilingual-to-pdf.py" "<名称> 翻译(日中对照).md" --title "书名" --author "作者"
-```
-
-也可显式指定路径：
-
-```bash
-python3 ~/.agents/skills/ja-zh-translation-polish/scripts/bilingual-to-pdf.py \
-  "/c/路径/《书名》/《书名》 翻译(日中对照).md" --title "二重生活" --author "小池真理子"
-```
-
-脚本功能：
-- 解析格式（日文 blockquote + 中文无标记）
-- 生成 Warm Paper 暖纸质感 HTML（默认）或 CEU Academic Navy 海军蓝 HTML（`--theme navy`）
-- 自动用 Playwright 渲染 A4 PDF
-- 输出文件与输入 `.md` 同目录（同名 .html + .pdf）
-- 验证日中配对完整性，缺中文时警告
-
-> **设计系统选择：** 翻译/小说类 → 默认暖纸（warm）；试卷/学习类 → `--theme navy`。
-
-依赖（只需安装一次）：
-```bash
-pip install playwright && python3 -m playwright install chromium
-```
-
-### 输出 MOBI 电子书（按需）
-
-翻译完成后（纯中文或双语均可），如需 Kindle MOBI 格式，用 Kindle Previewer 3 内置的 kindlegen：
-
-```bash
-KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/kindlegen.exe"
-"$KINDLEGEN" "<名称>.epub"
-```
-
-- 输入推荐用 EPUB（ebooklib 生成），kindlegen 自动输出同目录 MOBI
-- 直接接受 `.epub`、`.opf`（或 `.html`）输入
-- 警告（如无封面）不影响生成，退出码 1 = 有警告但成功
-- 生成 dual-format MOBI（V6+V8 KF8），Kindle 全系列兼容
-
-### 超长文本并行翻译
-
-当单篇翻译量超过 5,000 字时，可考虑按章节/幕次切割为若干独立子任务，派发 `delegate_task` 并行翻译。每个子任务的 `context` 中必须包含统一术语表和风格指南。子代理返回后需执行集成步骤（清理输出格式不兼容 → 合并 → 跑标点归一化）。
+**短篇优化（< 2,000 字）：** 仅读 #1 (INDEX) + #2-4 (核心框架 3 个) + #5-6 (宏观方法论 2 个) + #9 (语境适切)，共 7 个文件。仍不可完全跳过预读取。
 
 ## 工作流（严格按序；每段译文都要走完润色，不是初译就交）
 
 ### 阶段 0 — 文本分析：定归化档位 ★必做第一步
 
+> ⚠ **准入：** 阶段 -1 产物到位（source/ 目录 + 归位验证通过）。若仅聊天小段翻译则跳过 -1，直接进入文本分析。
+> ✅ **准出：** text-profile 已写入对照文件头部，且 **档位、自由度、文本类型、语域** 四项均非默认值/占位符。四项任一缺漏或为占位 = 退回补全，不可进入阶段 1。
+
 先回答：**这是硬文本还是软文本？属纽马克哪一类？自由度大致几分 (1–10)？**
+
+**判定完成后，立即将 text-profile 写入对照文件头部作为注释块：**
+
+```markdown
+<!-- text-profile
+档位: [偏硬/偏中/偏软] | 自由度: [N]/10 | 文本类型: [政论/文学/小说/新闻/...]
+文体: 语体[口语/书面/敬体/常体] | 风格[私小说/轻小说/一般/...] | 体裁[小说/书信/和歌/...]
+语境: [大众语境/个人语境] | 特殊标记: [无 / 性直白内容(语域对等优先) / EPUBルビ混淆(需清理)]
+策略: [准确优先/平衡/流畅优先], [敬语降维策略], [和製漢語两步法]
+-->
+```
+
+阶段 2/3/5 必须引用此 profile。若翻译过程中对档位产生疑问，回到此阶段修正 text-profile 后重新开始下游阶段。
 
 | 类型 | 自由度 | 典型文本 | 策略 |
 |------|--------|---------|------|
@@ -289,7 +170,7 @@ KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/
 | 偏中 | 4–6 | 新闻/教科书/一般论述/商务邮件 | 平衡，默认交际翻译 |
 | 偏软 | 7–9 | 小说/散文/评论/广告/歌词/漫画台词 | 大胆发挥意合，**流畅/效果优先**，可调结构 |
 
-文本外因素（翻译目的、读者是谁）一并考虑。档位一句话写进给用户的说明里。
+文本外因素（翻译目的、读者是谁）一并考虑。档位一句话写进给用户的说明里。**★ 读者中心：拿不准任何翻译决策时，回到统领原则——「这个读者是谁，在什么语境下读？」**
 
 #### 语境分析：大众语境 vs 个人语境（高宁，第三章，第 44 页）
 
@@ -312,13 +193,33 @@ KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/
 
 > **日文特殊性**：日语文学（特别是私小说、轻小说、漫画）中常出现大量内心独白、句尾省略（「……」或「——」）、碎片化对话。这些是文体特征，不是翻译腔——软文本中应保留；硬文本中才需补全。
 
+#### ★ jp-zh-max 增强：应用预载方法论（阶段 0）
+
+> 以下方法论文件已在阶段 -0.5 预读取时载入上下文。直接应用其框架——无需再 `Skill()` 加载。
+
+**1. 翻译意识** — 在 text-profile 判定前建立译者身份：
+- 身份切换 → 标注翻译难点 → 建立翻译决策备注模板
+- 将「专业意识 + 语言敏感度」的激活状态作为后续所有阶段的默认假设
+
+**2. 反孤句原则** — 验证待译文本的语境完整性：
+- 判断当前文本是否满足「前文 2 句 + 后文 1 句」最低标准
+- 对不满足的段落标注预设语境
+- 对全文翻译：确认 source/ 提取产物保留了原文的段落间关系
+
+**3. 文体与翻译** — 文体三层的翻译决策细化：
+- 语体（口语/书面语/敬体/常体）→ 翻译语域对齐的决策矩阵
+- 风格（私小说/轻小说/一般）→ 文体标记保留 vs 归化的判断标准
+- 体裁（小说/书信/和歌）→ 格式策略选择
+
+以上三个框架的决策结果汇入 text-profile，写入对照文件头部。产出标准同原 jp-zh 阶段 0。
+
 #### ⚠ 性/身体直白内容的语域陷阱
 
 日文情色/官能文本有其独特表达体系：隐语（「あそこ」「肉壺」）、当て字（「雌豚」读作「メスブタ」）、擬声語密集（「ぐちゅぐちゅ」「ぬぽっ」）。翻译时语域对齐优先于流畅归化——原文用什么层级的词，译文用同等层级。详见 `references/libertine-vocabulary-ja.md`。
 
 #### ⚠ EPUB ルビ（振り仮名）混淆文本（纯文学/小说常见）
 
-从 EPUB 用 `pandoc -t plain` 提取文本时，ルビ（振り仮名）会以内联混淆形式出现：
+从 EPUB 用 `pandoc -t markdown` 提取文本时，ルビ（振り仮名）会以内联混淆形式出现：
 - 「白しら石いし珠たま」→ 实际为「白石珠」
 - 「田でん園えん都と市し線」→ 实际为「田园都市線」
 - 「半はん蔵ぞう門もん線」→ 实际为「半蔵門線」
@@ -332,6 +233,9 @@ KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/
 **预防**：写入后立即用 `read_file` 抽查含大量引号的段落（长对话多段），确认中日引号各在其位。如果发现乱码，用 `patch` 或 `execute_code` 结合 Python 的 `str.replace()` 修复。
 
 ### 阶段 1 — 理解 → 脱离语言外壳
+
+> ⚠ **准入：** text-profile 已写入文件头部。不存在 = 退回阶段 0。
+> ✅ **准出：** 脱壳摘要已以注释形式写入对照文件（`<!-- 脱壳摘要: ... -->`，3–5 句中文概括全篇核心语义，不得含日文词/汉字）。注释不存在 = 本阶段未完成。
 
 读懂原文后，**抛开日文词句**，特别是抛开日文汉字词的书面形态，在脑中形成意义/图像，再用中文重构。关键操作：
 
@@ -351,7 +255,22 @@ KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/
 
 先翻译，再阐释。不要在翻译阶段就把自己的理解塞进译文——先忠实地把原文搬过来，阐释留给读者。
 
+#### ★ jp-zh-max 增强：应用审美制约机制（阶段 1）
+
+对原文关键段落逐句标注**审美制约机制**（预载方法论）的翻译约束强度：
+
+- **所指约束**：该句的概念/信息在多大程度上不可偏离
+- **能指约束**：该句的表达形式在多大程度上必须保留
+- **综合自由度**：该句上译者能改多少（1-10）
+
+此标注在后续阶段 3（润色）和阶段 5（质检）中被引用——若阶段 3 的润色超出自由边界，质检阶段将标记。
+
+> ⚠ **跳过条件：** 若 text-profile 判定档位为「偏硬」（自由度 1-3），此步标注为「约束均匀，无需逐句分析」并跳过。
+
 ### 阶段 2 — 按档位初译
+
+> ⚠ **准入：** text-profile + 脱壳摘要就绪。
+> ✅ **准出：** 全文段落均完成初译，每段尾部标注 `[v1]`。存在未标 [v1] 的段落 = 本阶段未完成。
 
 以**意合优先**起译：
 
@@ -361,7 +280,58 @@ KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/
 - 敬语降维——「お/ご〜」「〜でございます」按中文语境对应，不字面翻译。高宁指出：**"敬语的翻译令人棘手之处其实不在日语本身，相反在于我们的汉语水平。"**（第十一章，第 403 页）
 - 和製漢語先辨义再择词——不能看汉字就搬。遵循**两步法**：先查原版辞典（如『大辞林』『新明解』）确认日语语义 → 再查日汉辞典选中文对应词。实质是"人为地临时'编纂'一本'个人版双解辞典'"（高宁，第四章，第 69 页）
 
+#### ★ jp-zh-max 增强：应用选词决策方法论（阶段 2）
+
+**1. 辞书活用与词义**（预载方法论）— 和製漢語选词的语境优先决策：
+- 对每个和製漢語：先查原版辞典（『大辞林』『新明解』）确认日语语义 → 再选中文对应词
+- 对多义词：列出语境中的候选义项，标注为何选择此义而非其他
+- 与 jp-zh 的「和製漢語两步法」配合——两步法提供流程，本方法论提供每步的决策准则
+
+**2. 理性把握感性把握**（预载方法论）— 选词决策三步法：
+- **理性先行**：查辞典、分析语境、列出候选词
+- **感性激发**：凭语感判断哪个候选词最自然
+- **理性校验**：回核对原文，确认选词无误
+
+两个框架在阶段 2 初译过程中并行执行——对每个遇到的和製漢語 / 多义词即时判断，不等到初译完成后再回头改。
+
+初译完成后，每段中文译文末尾缀 `[v1]` 版记。
+
 ### 阶段 3 — 润色诊断（核心）逐段过三张表
+
+> ⚠ **准入：** 全文段落均标 [v1]。
+> ✅ **准出：** 全文段落均标 [v2·操作类型]，每段润色操作可追溯。存在未标 [v2·*] 的段落 = 本阶段未完成。
+
+#### 阶段 3 与阶段 5 的边界（必读）
+
+若修改的触发原因是 **「中文读着别扭」→ 归阶段 3（本阶段）**。若修改的触发原因是 **「对照原文发现误差」→ 归阶段 5（质检阶段）**。两个阶段都改完后段落标 `[v3·Q✓]`。
+
+日→中特别注意：和製漢語直搬导致的译文生硬属于阶段 3（中文内部润色）——如「検討する」译为「进行检讨」时，「检讨」在中文内部可优化为「讨论」；但若将「検討する」误解为「检查」则是理解错误 → 归阶段 5。
+
+例：
+- 初訳「この問題について検討する必要がある」→「有必要对这个问题进行检讨」→ 中文可接受但"检讨"生硬 →「有必要对这个问题加以研究」← **阶段 3**（中文选词优化）
+- 原文「手紙を受け取った」→ 译为「收到了手纸」→ 和製漢語理解错误（手紙 = 信）→「收到了信」← **阶段 5**（原文对照修正）
+
+#### 润色操作类型标记
+
+每段润色完成后，尾部缀以下标记之一：
+
+| 标记 | 含义 | 示例场景 |
+|------|------|---------|
+| `[v2·S]` | 改结构（拆句/合句/语序移位 SOV→SVO） | 长连体修饰 → 流水短句 |
+| `[v2·W]` | 换词（选词/和製漢語辨义/词性转） | 「検討」→ 视语境译为讨论/研究/考量 |
+| `[v2·A]` | 增删（增词补接续词意/删冗余「という」） | 删「ということ」、补隐含主语 |
+| `[v2·∅]` | 不改（初译已可接受，直接继承 [v1]） | 初译即终译 |
+
+#### ★ jp-zh-max 增强：应用多译案选择（阶段 3）
+
+对用 `[v2·W]` 或 `[v2·S]` 标记的关键句执行**同义句多译案选择法**（预载方法论）：
+
+- **发散**：对每个标记句生成 3-5 个不同译案（不同用词、不同句式、不同语序）
+- **收敛**：用「对不对 + 好不好」二维筛选 + 语域对等验证
+- **选优**：标注最终选择及取舍理由（格式：`[v2·W·语域]`、`[v2·W·辞书]`、`[v2·S·多译案]` 等）
+- **仅关键句执行，非全篇。** 典型触发句：含文化意象、含多义和製漢語、含长连体修饰、含暧昧表达。
+
+多译案的候选记录在最终清理阶段（阶段 8A）删除，不进入交付文件。
 
 1. **翻译腔病症** — 对照 `references/japanese-translationese-symptoms.md` 逐条排查并修：SOV 语序残留、和製漢語直搬、连体修饰长链、「という」泛滥、「こと・もの・わけ」句尾名词化、受身形过度迁移、敬语直译、「のだ」解释语气丢失/乱译、暧昧表达密度过高、授受动词硬译。
 2. **技巧库** — 用 `references/japanese-techniques.md` 的手段修：词性转换、增减词、分句合句、语序移位、授受动词化解、敬语降维、被动转化、正反译、句末助词语用翻译。
@@ -370,9 +340,17 @@ KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/
 
 ### 阶段 4 — 音韵节奏打磨
 
+> ⚠ **准入：** 全文段落均标 [v2·操作类型]。
+> ✅ **准出：** 全文已逐段读出声打磨，每段标 `[v3]`。存在未标 [v3] 的段落 = 本阶段未完成。
+
 读出声。利用双音节/四字结构、「偶字易适、奇字难平」、对偶排比。日文原句的音拍节奏（五七調、七五調）不可机械搬运——中文按自身节奏重组。**但软文本才放开；硬文本点到为止。**
 
 ### 阶段 5 — 准确性质检 + 译文修改
+
+> ⚠ **准入：** 全文段落均标 [v3]。
+> ✅ **准出：** 质检报告全部项 ✓ + 全文段落标 `[v3·Q✓]`。任一项 ✗ = 退回对应阶段修复后重跑本阶段。
+
+判别：本阶段只处理原文对照问题（漏译/错译/添译/语域错位/理解错误）。中文内部润色归阶段 3。
 
 逐项核查（理解优先，修辞次之）：
 
@@ -383,11 +361,44 @@ KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/
 - [ ] 授受动词（〜てくれる/もらう/あげる）是否化解为中文自然表达
 - [ ] 敬语是否降维到对应中文语域
 - [ ] 句末助词（ね/よ/わ/ぞ）的语气是否用中文手段补偿
-- [ ] 主语是否在必要时才补回——**不应把加译主语当作日汉翻译的常态**（高宁，第八章，第 253 页）
+- [ ] 主语是否在必要时才补回——**不把加译主语当作日汉翻译的常态**
 - [ ] 专名/术语/数字是否准确
-- [ ] 指代是否清晰（日文主语省略极多，但中文同样可以省略——高宁第八章第 251–252 页明确指出这是普遍误解）
-- [ ] 语域是否对齐（敬体↔正式，常体↔日常/口语）
+- [ ] 指代是否清晰
+- [ ] 语域是否对齐（敬体↔正式，常体↔日常/口语；与 text-profile 交叉核验）
 - [ ] 理解错误零容忍
+- [ ] 擅自改结构/移焦点 — 对照原文核每处 [v2·S] 标记段
+- [ ] 漏译情态/语气（句末表达的核心功能）
+- [ ] 擅自添词/加译过度
+- [ ] 搭配不当
+- [ ] 逻辑关系误判（因果/让步/条件/逆接）
+- [ ] 隐喻/文化意象决策是否与档位一致（花鳥風月/物哀/侘寂等）
+- [ ] 性/身体词汇语域对等（如涉及）
+- [ ] 日文特有风物/文化概念的翻译策略是否与 text-profile 一致
+
+#### ★ jp-zh-max 增强：应用质检三部曲（阶段 5）
+
+**1. 同源译文比较法**（预载方法论）— 对 2-3 处关键段落执行多译文二维比较：
+- 将阶段 3 保留的多译案候选与本阶段 [v3] 译文并列比较
+- 用「对不对」（忠实度）+「好不好」（自然度）二维矩阵评价每个译案
+- 产出：最终选定译文 + 决策依据记录（在阶段 8A 清理时删除）
+
+**2. 译文修改分层框架**（预载方法论）— 在 jp-zh 三层修改（篇章→句子→词汇）基础上增加第四层：
+- 篇章层：段落间衔接、信息流
+- 句子层：语法结构、长修饰分割
+- 词汇层：和製漢語陷阱、选词精准度
+- **修辞层（★ 新增）**：辞格处理、敬语降维、文体审美一致性
+
+四层修改的产出直接替代 jp-zh 原有的三层修改清单。修改记录在阶段 8A 清理时删除。
+
+**3. 回译训练法**（预载方法论）— 对怀疑存在翻译腔的 3-5 处关键段落执行：
+- 将中文译文回译成日文
+- 与原日文对比，标记差异点
+- 判断差异是「合理的归化处理」还是「偏离原意的误译」
+- 回译暴露的偏差在当前阶段立即修复，回译记录在阶段 8A 清理时删除
+
+> ⚠ **回译训练法是诊断工具，非翻译工具。** 不对全篇执行——仅对软文本中译文风格最突出的 3-5 处段落执行。硬文本跳过此步。
+
+全部 ✓ 后，将每段版记从 `[v3]` 改为 `[v3·Q✓]`。
 
 #### 译文修改：从大到小层层推进（高宁，第十二章，第 425 页）
 
@@ -407,6 +418,9 @@ KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/
 
 ### 阶段 6 — 中文标点规范化 ★（机械执行，落盘后必跑）
 
+> ⚠ **准入：** 全文段落均标 [v3·Q✓] + 质检报告全部项 ✓。未满足 = 退回阶段 5。
+> ✅ **准出：** `normalize-punctuation-ja.py` 执行完毕，输出 `残留: 0`。残留 ≠ 0 = 手动修复后重跑脚本直到 0。
+
 日文中译后的标点必须转为中文全角。日文特有规则：
 
 - **`、`（読点）→ `，`**——这是日→中最频繁需要的转换
@@ -423,10 +437,167 @@ KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/
 
 **Windows (git-bash)：**
 ```bash
-python3 "$HOME/.agents/skills/ja-zh-translation-polish/scripts/normalize-punctuation-ja.py" "<名称> 翻译(日中对照).md"
+python3 "$SKILL_DIR/scripts/normalize-punctuation-ja.py" "<名称> 翻译(日中对照).md"
 ```
 
-### 阶段 7 — 输出日中对译
+### 阶段 7 — 交付前校验链 ★ 落盘后强制执行（四步骤，不可跳步）
+
+> ⚠ **准入：** 对照 md 已落盘 + 阶段 6 残留 = 0。
+> ✅ **准出：** 校验链四步全部通过（prose-reviewer → verification-before-completion → humanizer → humanizer-zh）。任一步未通过 = 修复后重走该步。
+
+翻译文本已落盘，但**任务尚未完成**。以下 4 步骤必须**按顺序**全部通过后，才可宣告"翻译完成"。任一步骤发现问题 → 回到对应阶段修复 → 重跑校验链。
+
+**步骤 1：`scribe:prose-reviewer`**
+
+审查中文译文——AI 写作腔、翻译腔残留、禁用短语、语感漂移、结构单调。译文是自然语言文本，**不可跳过此步**。
+
+> ※ 注意：prose-reviewer 的判断为**参考意见**，并非最终决定。prose-reviewer 建议的修改（如语感调整、措辞替换等），后续的 humanizer（步骤 3）拥有最终裁量权。对存疑建议**不要机械接受**，留待 humanizer 裁决。
+
+**步骤 2：`superpowers:verification-before-completion`**
+
+全交付物完整性检查：MD/HTML 是否齐全、标点残留是否为 0、日中配对是否完整、原文件是否在 `source/` 内。此外确认以下翻译专属项目：
+- [ ] `humanizer` **尚未执行**（步骤 3 即将执行，此处只需确认"未执行"）
+- [ ] 日文原文 blockquote 与中文译文的段落对应一致
+- [ ] **阶段 8 强制清理待执行** — 版本标记 `[v*]` 仍存在于非 blockquote 行；text-profile 注释块未删除；译者署名未添加（此三项将在阶段 8 第一步由脚本机械完成）
+
+> ⚠ **此时绝不宣称"完成"。** verification-before-completion 通过后，必须继续步骤 2.5（修辞技能）→ 步骤 3（humanizer）→ 步骤 4（humanizer-zh）。
+
+**★ jp-zh-max 增强：修辞技能 invoke（步骤 2.5）**
+
+verification-before-completion 通过后、humanizer 之前，应用以下两个预载方法论框架：
+
+**1. 修辞翻译教学** — 双层判断框架：
+- 共通辞格（比喻、排比、反问等）：中日共通的直接对应
+- 民族特色辞格（掛詞、枕詞、縁語等）：判断中国读者能否解码 → 保留 / 加注 / 替换
+- 对译文中涉及修辞的关键句逐条标注修辞类型和处理决策
+
+**2. 修辞意识发展** — 三阶段自评框架：
+- 阶段 1「达意」：信息准确无遗漏
+- 阶段 2「得体」：语域适切、文体统一
+- 阶段 3「传神」：修辞效果接近原文
+- 对全篇译文进行三阶段评级，标记未达「得体」的段落
+
+> ⚠ **跳过条件：** 若 text-profile 档位为「偏硬」（自由度 1-3），此步跳过——法律/技术文本不涉及修辞选择。
+
+humanizer 在步骤 3 执行时，将引用此处的修辞类型标注和三阶段评级，作为判断译文「传神度」的依据。
+
+**步骤 3：`humanizer`（★ 最终质量关卡·绝对不可跳过）**
+
+verification-before-completion 通过后，**立即 invoke `humanizer` skill**。这是翻译工作流的**最终关卡**，任何理由均不可跳过。
+
+调用方式：
+```
+Skill("humanizer")
+```
+
+humanizer 在翻译模式下执行以下操作：
+- 读取完整的 `<名称> 翻译(日中对照).md`
+- 将中文译文按段落切割为 chunk（每块 3–5 段，编号 C1–CN）
+- 对每个 chunk 执行**四维验证**：**Fidelity**（忠实度：逐句对照源文，检查语义等价/否定/情态/专名）→ **Naturalness**（自然度：翻译腔/语感/注册）→ **Grammar**（语法错字：搭配/标点/一致）→ **AI Patterns**（AI 痕迹：29 种模式作为 Check D）
+- 输出每块的四维 💚/❌ 追踪报告，标注具体问题位置
+- 执行**强制对抗式自审**（Phase 2）——对全部 💚 通过的块重新逐句审查，防止系统性盲区遗漏
+- 根据报告修复问题段落——保留原文意义，注入自然语感，压制 AI 腔
+- **仅处理中文译文，不动日文原文 blockquote**
+- 将修复后的中文译文原位写回文件
+
+**★ humanizer 的最终裁量权：**
+
+humanizer 是翻译管线的最终质量判定者。对 prose-reviewer 已建议的修改（措辞调整、翻译腔修正、表达替换等），humanizer 拥有以下裁量权：
+- **批准并应用** prose-reviewer 的建议
+- **拒绝并还原** prose-reviewer 的建议（如 prose-reviewer 判断 prose 过于"文学化"建议简化，但 humanizer 结合上下文判断原文语域应保留）
+- 发现并修正 prose-reviewer 遗漏的问题
+- prose-reviewer 与 humanizer 判断冲突时，**以 humanizer 为准**
+
+humanizer 完成后：
+- 输出摘要：处理的 chunk 数、各维度问题数、修复项目概要（含 prose-reviewer 建议的批准/拒绝明细）
+- 确认日中对齐结构未被破坏
+- **此时校验链完成，可进入阶段 8 输出交付物**
+
+> ⚠ **humanizer 跳过是重大工作流违规。** 翻译是 AI 产出文本中 AI 腔最密集的品类之一——翻译腔与 AI 腔高度重叠。prose-reviewer 是翻译腔/语感漂移的一级检测器，但 humanizer v3 的四维管道（忠实度 + 自然度 + 语法 + AI 模式）+ 强制对抗式自审提供了更全面的质量保障——能够发现 prose-reviewer 未标记的问题。两者互补不可互替。humanizer 是交付前最后一道质量关卡，未经过 humanizer 的翻译是未完成的。
+
+**步骤 4：`humanizer-zh`（★ 中文 AI 痕迹终审·绝对不可跳过）**
+
+humanizer 完成后，**立即 invoke `humanizer-zh` skill**。这是中文译文在交付前的**最后一道质量检查**，任何理由均不可跳过。
+
+调用方式：
+```
+Skill("humanizer-zh")
+```
+
+humanizer-zh 在翻译模式下执行以下操作：
+- 读取完整的 `<名称> 翻译(日中对照).md`
+- **仅处理中文译文行**——过滤 `> ` 开头的日文 blockquote 行，只扫描中文译文
+- 按段落 chunk（3–5 段一组）逐块过 **24 条中文 AI 痕迹规则**（四大类：内容模式 6 + 语言语法 6 + 风格模式 6 + 交流填充 6）
+- 检测并修复：AI 高频词汇（「此外」「格局」「织锦」「深入探讨」等 20 词）、破折号滥用、三段式排比、否定式排比、系动词回避、虚假范围、填充短语、通用积极结论等
+- **不改变译文语义**——Fidelity 已由 humanizer（步骤 3）完成，此步只做中文内部的语言自然度优化
+- 将修复后的中文译文原位写回文件，保持日中对齐结构
+- 输出摘要：处理的 chunk 数、各分类问题数、修复项清单
+
+> **职责边界：** humanizer 负责「译得对」（Fidelity + Naturalness + Grammar），humanizer-zh 负责「读起来像人写的」（中文 AI 痕迹清除）。二者各司其职。humanizer-zh 不做原文对照——那是 humanizer 已完成的工作。
+
+#### ★ 校验链错误自动修正（默认行为）
+
+校验链四步（prose-reviewer → verification-before-completion → humanizer → humanizer-zh）中发现的**任何错误或问题**，必须**默认自动修正**并**直接写入对照 md 文件**。这是强制默认行为，不可跳过：
+
+- **prose-reviewer 标记的问题** → 经 humanizer 裁决后，自动将采纳的修改写入 md
+- **verification-before-completion 发现的缺失/不完整** → 自动补全并落盘
+- **humanizer 四维验证（Fidelity / Naturalness / Grammar / AI Patterns）发现的问题** → 自动修复并原位写回 md
+- **humanizer-zh 24 模检测发现的问题** → 自动修复并原位写回 md
+- **所有修正不等待用户逐条批准**——自动执行、自动落盘
+- 修正完成后的 md 是阶段 8 派生 HTML/EPUB/MOBI 的**唯一输入源**
+- 若修正后导致日中对齐结构变化，humanizer 需在摘要中注明
+
+> 校验链以修复为终点：发现问题后不修正是流程中断，不是"完成"。
+
+### 阶段 8 — 最终清理与交付物生成
+
+> ⚠ **准入：** 校验链全部通过（阶段 7 完成）。
+> ✅ **准出：** 步骤 8A 三项清理完成 + 步骤 8B 交付物全部生成。
+
+#### 步骤 8A — 最终清理（★ 强制门禁·绝对不可跳过）
+
+> ⚠ **这是阶段 8 的第一道门禁。以下 3 项全部完成并通过验证前，禁止进入步骤 8B（派生交付物）。**
+> ✅ **准出：** 版本标记残留 = 0、text-profile 已删除、译者署名已添加。三项缺一不可。
+
+阶段 7 的 humanizer 已对 MD 完成原位修复。**派生 HTML/EPUB/MOBI 之前**，必须先对对照 MD 文件执行以下三项清理：
+
+1. **剥夺版本标记** — 删除所有内部工序标记：
+   - jp-zh 标准版记：`[v1]`、`[v2·S]`、`[v2·W]`、`[v2·A]`、`[v2·∅]`、`[v3]`、`[v3·Q✓]`
+   - jp-zh-max 扩展版记：`[v2·W·语域]`、`[v2·W·辞书]`、`[v2·W·理性感性]`、`[v2·S·多译案]` 等含理由字段的版记
+   - ultra 诊断记录：多译案候选列表、回译诊断差异记录、修辞类型标注、三阶段评级
+   最终交付文件不应保留翻译工作流内部版本号及诊断记录。
+
+2. **删除 AI 处理标记** — 删除 `<!-- text-profile ... -->` 注释块。最终译本面向人类读者，不是技术日志。
+
+3. **增加译者署名** — 在标题行（`# 《书名》`）上方加 `**译者：Lilipuut + Claude**` 及 `---` 分隔线。全中文版和 EPUB 同样继承此行。
+
+**机械执行（强制脚本——与阶段 6 标点脚本同级强制力）：**
+
+```bash
+python3 "$SKILL_DIR/scripts/strip-version-markers.py" "<名称> 翻译(日中对照).md"
+```
+
+脚本自动完成上述三项操作并输出统计。**脚本跑完 ≠ 门禁通过**——还需执行以下三项 grep 验证（三项均须通过）：
+
+```bash
+# 验证 1：版本标记残留必须为 0
+grep -cE '\[v[123]' "<名称> 翻译(日中对照).md" && echo '❌ 版本标记残留！' || echo '✅ 版本标记已清零'
+
+# 验证 2：text-profile 必须已删除
+grep -c 'text-profile' "<名称> 翻译(日中对照).md" && echo '❌ text-profile 残留！' || echo '✅ text-profile 已删除'
+
+# 验证 3：译者署名必须存在
+grep -c '译者：Lilipuut' "<名称> 翻译(日中对照).md" && echo '✅ 译者署名已添加' || echo '❌ 译者署名缺失！'
+```
+
+> ⚠ **任一项验证失败 = 门禁未通过。** 退回修复后重跑脚本 + 重验，直到三项全部通过。
+
+#### 步骤 8B — 派生交付物
+
+> ⚠ **准入：** 步骤 8A 三项 grep 验证全部通过。
+> ✅ **准出：** HTML 已生成 + EPUB/MOBI（全文翻译时按需）。
+
+**以下输出基于清理后的最终译文。** 步骤 8A 已完成版本标记剥夺 + AI 标记删除 + 译者署名添加，本步骤从中派生 HTML/EPUB/MOBI。
 
 按下方格式逐段配对：
 
@@ -451,63 +622,11 @@ python3 "$HOME/.agents/skills/ja-zh-translation-polish/scripts/normalize-punctua
 - 中文译文的 `" "` 成对出现、内部无日文角括号碎片
 - 形如 `'』':` 的乱码片段不存在。发现后立即用 Python `str.replace()` 修复再跑一次标点脚本。
 
-### 阶段 8 — 交付前校验链 ★ 落盘后强制执行（三步骤，不可跳步）
-
-翻訳テキストはディスクに書き込まれましたが、**タスクはまだ完了していません**。以下 3 ステップを**必ず順番に**全て通過して初めて「翻訳完了」を宣言できます。1 つでも通過しない場合は該当フェーズに戻って修正 → 検証チェーンを再実行してください。
-
-**ステップ 1：`scribe:prose-reviewer`**
-
-中国語訳文を審査——AI 作文調、翻訳調の残留、禁止フレーズ、語感のドリフト、構造の単調さをチェック。訳文は自然言語テキストのため**スキップ不可**。
-
-> ※ 注意：prose-reviewer の判断は参考意見であり、最終判断ではない。prose-reviewer が提案した変更（例：「宛如」→「像」のような語感调整）は、後続の humanizer（ステップ 3）が最終裁量権を持つ。疑わしい提案は**機械的に受け入れず**、humanizer に委ねること。
-
-**ステップ 2：`superpowers:verification-before-completion`**
-
-全成果物の完全性チェック：MD/HTML が揃っているか、句読点残留が 0 か、日中ペアが完全か、元ファイルが `source/` 内にあるか。また以下の翻訳固有項目も確認すること：
-- [ ] `humanizer` が**まだ実行されていない**ことを確認（ステップ 3 でこれから実行するため、ここでの確認は「未実行であること」）
-- [ ] 日本語原文 blockquote と中国語訳文の段落対が一致しているか
-
-> ⚠ **この時点で「完了」と決して言わない。** verification-before-completion 通過後、必ずステップ 3（humanizer）に進む。
-
-**ステップ 3：`humanizer`（★ 最終品質関門·絶対不可跳过）**
-
-verification-before-completion 通過後、**直ちに `humanizer` skill を invoke** する。これは翻訳ワークフロー全体の**最終関門**であり、いかなる理由でも跳过できない。
-
-呼び出し方法：
-```
-Skill("humanizer")
-```
-
-humanizer は翻訳モードで以下を実行：
-- 完全な `<名称> 翻译(日中对照).md` を読み込み
-- 中国語訳文を段落ごとに chunk に分割（各 3–5 段落、C1–CN の番号）
-- 各 chunk に対して**4 次元検証**を実行：**Fidelity**（忠实度：原文と逐文对照、意味等価性/否定/モダリティ/固有名詞を確認）→ **Naturalness**（自然度：翻訳調/語感/レジスター）→ **Grammar**（文法・誤字：コロケーション/句読点/一致）→ **AI Patterns**（AI 痕跡：29 パターンを Check D として）
-- 各 chunk の 4 次元 💚/❌ 追跡レポートを出力し、具体的な問題箇所を明示
-- **強制 adversial 自己レビュー**（Phase 2）を実行——すべて 💚 の chunk を再度文単位で精査し、系統的なブラインドスポットを見逃さない
-- レポートに基づいて問題箇所を修正——原文の意味を保持しつつ、自然な語感を注入、AI 調を抑制
-- **中国語訳文のみを処理し、日本語原文 blockquote には触れない**
-- 修正した中国語訳文を同じ位置に書き戻す
-
-**★ humanizer の最終裁量権：**
-
-humanizer は翻訳パイプラインの最終品質判定者である。prose-reviewer が提案した変更（語感調整、翻訳腔修正、表現の置換など）に対して、humanizer は以下の裁量権を持つ：
-- prose-reviewer の提案を**承認して適用**する
-- prose-reviewer の提案を**拒否して元に戻す**（例：prose-reviewer が「宛如」→「像」を提案したが、humanizer が文学テクストの語感を考慮して「宛如」のままが適切と判断した場合）
-- prose-reviewer が気付かなかった新たな問題を検出して修正する
-- prose-reviewer と humanizer の判断が衝突した場合、**humanizer の判断が優先される**
-
-humanizer 完了後：
-- サマリーを出力：処理した chunk 数、各次元の問題数、修正項目の概要（prose-reviewer 提案の承認/拒否を含む）
-- 日中对齐構造が破壊されていないことを確認
-- **この時点で初めて翻訳完了と宣言できる**
-
-> ⚠ **humanizer 跳过は重大なワークフロー違反。** 翻訳は AI 生成テキストの中で最も AI 調が密集しやすいカテゴリの一つ——翻訳調と AI 調は高度に重複している。prose-reviewer は翻訳調/語感ドリフトの一次検出器だが、humanizer v3 の 4 次元パイプライン（忠实度 + 自然度 + 文法 + AI パターン）+ 強制 adversial 自己レビューはより包括的な品質保証を提供する——prose-reviewer がマークしなかった問題も検出できる。両者は補完関係にあり互換ではない。humanizer は納品前の最終品質関門であり、このステップを経ていない翻訳は未完成である。
-
 ## 润色边界 ★（防止方法论被用过头）
 
 - **不要过度归化**：别为了「地道」抹掉日文原文该保留的风格、术语精度、文化标记。日本特有的风物（花見、茶道、祭り）和文化概念（侘寂、物哀）在偏软文本中应适当保留，让中国读者通过翻译了解日本文化。
 - **不要堆砌四字成语**：音韵节奏是手段不是目的，过度使用会显得卖弄、失真。
-- **拿不准时回到阶段 0 的档位**：自由度越低，越克制。
+- **拿不准时回到阶段 0 的档位**：自由度越低，越克制。最终仲裁者永远是**读者中心**——问自己：「在这个语境下，读者需要看到什么？」
 
 ## 示例
 
@@ -524,12 +643,3 @@ humanizer 完了後：
 
 西方曾笃信自己将在二十一世纪稳居主导地位，如今这份自信，正逐渐让位于一种隐隐的不安。
 
-## 致谢与许可
-
-本 skill 的代码、提示词与组织方式以 **MIT 许可**发布。
-
-方法论继承自叶子南《高级英汉翻译理论与实践》（第 4 版，清华大学出版社，2020）的英译汉框架，并扩展适配日译汉语境。日译汉专项内容基于高宁《日汉翻译教程》（上海外语教育出版社，2008）全书 12 章系统提取。建议系统学习者购买正版原著。
-
-**Claude Code 部署**：详见 `references/claude-code-deployment.md`。
-
-建议系统学习者购买正版原著。

@@ -1,23 +1,8 @@
-# OS files
+__pycache__/
+*.py[cod]
 .DS_Store
 Thumbs.db
 Desktop.ini
-
-# Editor artifacts
 .idea/
 .vscode/
 *.swp
-*.swo
-*~
-
-# Python
-__pycache__/
-*.py[cod]
-*.egg-info/
-.venv/
-venv/
-
-# Logs
-*.log
-tmp/
-temp/
