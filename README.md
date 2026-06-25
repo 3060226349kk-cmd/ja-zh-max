@@ -190,9 +190,31 @@ ultra/
 
 ### 环境要求
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code)（推荐最新版本）
-- Python 3.8+（运行 `scripts/` 下辅助脚本）
-- Pandoc（可选，EPUB/MOBI/PDF 输出）
+| 依赖 | 版本要求 | 用途 | 必需/可选 |
+|------|---------|------|----------|
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | 最新版推荐 | 运行本 skill 的宿主 CLI | **必需** |
+| Python | 3.8+ | 运行 `scripts/` 下辅助脚本 | **必需** |
+| Git | — | 克隆仓库、版本管理 | **必需** |
+| pip: `playwright` | 最新 | HTML → PDF 渲染（`bilingual-to-pdf.py`） | 可选① |
+| pip: `ebooklib` | 最新 | EPUB 生成（`output-formats.md` 脚本） | 可选① |
+| pip: `PyMuPDF` (`fitz`) | 最新 | PDF 文本提取（`project-init.md` 脚本） | 可选② |
+| [Pandoc](https://pandoc.org) | 最新 | 文本格式转换（EPUB/MOBI/PDF 输出中间件） | 可选① |
+| [Kindle Previewer 3](https://www.amazon.com/gp/feature.html?docId=1000765261)（含 `kindlegen`） | 3.x | EPUB → MOBI 转换 | 可选① |
+| [Calibre](https://calibre-ebook.com)（`ebook-convert`） | 最新 | AZW3/MOBI 格式转换 | 可选① |
+| [marker-pdf](https://github.com/VikParuchuri/marker)（`marker`） | 最新 | 扫描版 PDF OCR→文本 | 可选② |
+
+> **①** 仅当需要该输出格式时安装（日中对照 MD 是所有格式的源头，MD 本身不需要任何额外工具）。
+> **②** 仅当待译原文为扫描版 PDF 或特殊格式时安装。普通文本文件/EPUB 无需。
+
+脚本依赖路径配置：
+
+```bash
+# Playwright（PDF 渲染）— 安装一次即可
+pip install playwright && python3 -m playwright install chromium
+
+# Kindlegen（MOBI 生成）— 通过 Kindle Previewer 3 安装，确认 PATH 或脚本路径
+# 修改 references/output-formats.md 中的 KINDLEGEN 变量指向你的实际安装路径
+```
 
 ---
 
@@ -498,9 +520,31 @@ ultra/
 
 ### Requirements
 
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (latest version recommended)
-- Python 3.8+ (for `scripts/` helper scripts)
-- Pandoc (optional, for EPUB/MOBI/PDF output)
+| Dependency | Version | Purpose | Required |
+|-----------|---------|---------|----------|
+| [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | latest | Host CLI for this skill | **Required** |
+| Python | 3.8+ | Helper scripts in `scripts/` | **Required** |
+| Git | — | Clone & version management | **Required** |
+| pip: `playwright` | latest | HTML → PDF rendering (`bilingual-to-pdf.py`) | Optional¹ |
+| pip: `ebooklib` | latest | EPUB generation (`output-formats.md` scripts) | Optional¹ |
+| pip: `PyMuPDF` (`fitz`) | latest | PDF text extraction (`project-init.md` scripts) | Optional² |
+| [Pandoc](https://pandoc.org) | latest | Format conversion (EPUB/MOBI/PDF intermediary) | Optional¹ |
+| [Kindle Previewer 3](https://www.amazon.com/gp/feature.html?docId=1000765261) (incl. `kindlegen`) | 3.x | EPUB → MOBI conversion | Optional¹ |
+| [Calibre](https://calibre-ebook.com) (`ebook-convert`) | latest | AZW3/MOBI format conversion | Optional¹ |
+| [marker-pdf](https://github.com/VikParuchuri/marker) (`marker`) | latest | Scanned PDF OCR → text | Optional² |
+
+> ¹ Only needed when generating that specific output format (bilingual MD is the source of all formats and requires no extra tools).  
+> ² Only needed when the source text is a scanned PDF or special format. Plain text/EPUB files need none.
+
+Script path configuration:
+
+```bash
+# Playwright (PDF rendering) — install once
+pip install playwright && python3 -m playwright install chromium
+
+# Kindlegen (MOBI) — installed via Kindle Previewer 3; update KINDLEGEN path
+# in references/output-formats.md to match your installation
+```
 
 ---
 
