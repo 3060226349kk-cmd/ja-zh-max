@@ -2,6 +2,7 @@
 
 > 快速查阅：每个 jp-zh 阶段对应的 ultra 技能及执行方式。
 > 完整设计见 `docs/superpowers/specs/2026-06-25-jp-zh-ultra-integration-design.md`
+> 📊 翻译工作流流程图见 [`WORKFLOW.md`](WORKFLOW.md)（含校验链）
 
 ## 预读取批（P0）—— 阶段 -1 之后执行
 
