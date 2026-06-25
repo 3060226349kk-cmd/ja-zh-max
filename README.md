@@ -87,6 +87,10 @@ jp-zh-max/
 
 本技能的基本框架源自 [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish)（英汉翻译打磨），在其 7 阶段工作流基础上扩展为日汉翻译专用版。感谢原技能的架构设计。
 
+书中 20 个翻译技能的蒸馏提取通过 [cangjie-skill](https://github.com/3060226349kk-cmd/cangjie-skill) 的 book2skill 管线完成。
+
+特别鸣谢 **高宁** 教授——《日汉翻译教程》（上海外语教育出版社，2008）为整套方法论提供了系统理论基石。本书的翻译意识论、语境分析框架、文体三层分析、缩扩句法与后推法等核心概念，构成了本 skill 每个阶段的学理支撑。
+
 ## 许可
 
 MIT License — 详见 [LICENSE](LICENSE)。
@@ -123,4 +127,7 @@ MIT
 ## Related projects
 
 - [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish) — English→Chinese translation polish (this skill's framework origin)
+- [cangjie-skill](https://github.com/3060226349kk-cmd/cangjie-skill) — book2skill distillation pipeline (20 skills distilled from Gao Ning's textbook)
 - [humanizer-zh](https://github.com/3060226349kk-cmd/humanizer-zh) — Chinese text humanization pipeline
+
+Special thanks to **Prof. Gao Ning** — his *Japanese-Chinese Translation Course* (上海外语教育出版社, 2008) provides the theoretical foundation for this skill's methodology.
