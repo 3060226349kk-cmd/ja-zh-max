@@ -83,6 +83,10 @@ jp-zh-max/
     └── strip-version-markers.py            # 版本标记清理
 ```
 
+## 致谢
+
+本技能的基本框架源自 [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish)（英汉翻译打磨），在其 7 阶段工作流基础上扩展为日汉翻译专用版。感谢原技能的架构设计。
+
 ## 许可
 
 MIT License — 详见 [LICENSE](LICENSE)。
@@ -115,3 +119,8 @@ Polish this translation:
 ## License
 
 MIT
+
+## Related projects
+
+- [en-zh-translation-polish](https://github.com/3060226349kk-cmd/en-zh-translation-polish) — English→Chinese translation polish (this skill's framework origin)
+- [humanizer-zh](https://github.com/3060226349kk-cmd/humanizer-zh) — Chinese text humanization pipeline
