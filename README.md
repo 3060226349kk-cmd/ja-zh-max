@@ -59,30 +59,8 @@ git clone https://github.com/3060226349kk-cmd/ja-zh-max.git jp-zh-max
 ## 文件结构
 
 ```
-jp-zh-max/
-├── SKILL.md                                # 主技能文件（v3.2.0）
-├── README.md                               # 本文件
-├── LICENSE                                 # MIT License
-├── .gitignore
-├── ultra/
-│   ├── SKILL_MAP.md                        [→](https://github.com/3060226349kk-cmd/ja-zh-max/blob/master/ultra/SKILL_MAP.md) Ultra 增强技能映射表
-│   └── WORKFLOW.md                         # 翻译工作流流程图（含校验链）
-├── references/
-│   ├── claude-code-deployment.md           # Claude Code 部署
-│   ├── japanese-techniques.md              # 日语翻译技法
-│   ├── japanese-text-analysis.md           # 日语文本分析
-│   ├── japanese-translationese-symptoms.md # 日语翻译腔症状
-│   ├── libertine-vocabulary-ja.md          # 日语风流词汇
-│   ├── output-formats.md                   # 输出格式规范
-│   ├── project-init.md                     # 项目初始化
-│   ├── revision-methodology.md             # 修订方法论
-│   ├── textbook-extraction-workflow.md     # 教材提取工作流
-│   └── wasei-kango-traps.md               # 和製漢語陷阱
-└── scripts/
-    ├── bilingual-to-pdf.py                 # 对照→PDF 生成
-    ├── normalize-punctuation-ja.py         # 日语标点规范化
-    └── strip-version-markers.py            # 版本标记清理
-```
+📊 完整翻译工作流流程图（含校验链）：
+<https://github.com/3060226349kk-cmd/ja-zh-max/blob/master/ultra/WORKFLOW.md>
 
 ## 致谢
 
