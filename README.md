@@ -218,14 +218,14 @@ pip install playwright && python3 -m playwright install chromium
 
 ### 所需 Skill 依赖
 
-本 skill 的校验链和方法论依赖以下 Claude Code skill（均从 GitHub 安装）：
+本 skill 的校验链和方法论依赖以下 Claude Code skill：
 
-| Skill | 仓库 | 用途 | 安装方式 |
-|-------|------|------|---------|
-| [superpowers](https://github.com/3060226349kk-cmd/superpowers) | `3060226349kk-cmd/superpowers` | 校验链步骤：`verification-before-completion` | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/superpowers.git` |
-| [scribe](https://github.com/3060226349kk-cmd/scribe) | `3060226349kk-cmd/scribe` | 校验链步骤：`scribe:prose-reviewer`（AI 腔/翻译腔审查） | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/scribe.git` |
-| [humanizer](https://github.com/3060226349kk-cmd/humanizer) | `3060226349kk-cmd/humanizer` | 校验链步骤：四维验证（Fidelity / Naturalness / Grammar / AI Patterns）+ 强制对抗自审 | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/humanizer.git` |
-| [humanizer-zh](https://github.com/3060226349kk-cmd/humanizer-zh) | `3060226349kk-cmd/humanizer-zh` | 校验链步骤：中文 AI 痕迹终审（24 条规则） | `cd ~/.claude/skills/ && git clone https://github.com/3060226349kk-cmd/humanizer-zh.git` |
+| Skill | 官方来源 | 用途 | 安装方式 |
+|-------|---------|------|---------|
+| [superpowers](https://github.com/obra/superpowers) | `obra/superpowers` | 校验链步骤：`verification-before-completion` | `cd ~/.claude/skills/ && git clone https://github.com/obra/superpowers.git` |
+| scribe | [Claude Code 内置工具](https://docs.anthropic.com/en/docs/claude-code/plugins) | 校验链步骤：`scribe:prose-reviewer`（AI 腔/翻译腔审查） | Claude Code 自带，无需额外安装 |
+| [humanizer](https://github.com/blader/humanizer) | `blader/humanizer` | 校验链步骤：四维验证（Fidelity / Naturalness / Grammar / AI Patterns）+ 强制对抗自审 | `cd ~/.claude/skills/ && wget -O SKILL.md https://raw.githubusercontent.com/blader/humanizer/main/SKILL.md` |
+| humanizer-zh | 派生自 `blader/humanizer`（中文适配） | 校验链步骤：中文 AI 痕迹终审（24 条规则） | 同 `humanizer`，中文规则已翻译适配 |
 
 > jp-zh-max 的工作流本身不依赖以上 skill 即可运行基础翻译（阶段 0-6），但校验链（阶段 7）和方法论增强阶段（阶段 -0.5/0/1/2/3/5）需要对应 skill 就位。
 >
@@ -563,14 +563,14 @@ pip install playwright && python3 -m playwright install chromium
 
 ### Required Skills
 
-The validation pipeline and methodology enhancements rely on these Claude Code skills (all installable from GitHub):
+The validation pipeline and methodology enhancements rely on these Claude Code skills:
 
-| Skill | Repository | Purpose | Install |
-|-------|-----------|---------|---------|
-| [superpowers](https://github.com/3060226349kk-cmd/superpowers) | `3060226349kk-cmd/superpowers` | Validation chain: `verification-before-completion` | `git clone https://github.com/3060226349kk-cmd/superpowers.git` |
-| [scribe](https://github.com/3060226349kk-cmd/scribe) | `3060226349kk-cmd/scribe` | Validation chain: `scribe:prose-reviewer` (AI-isms/translationese audit) | `git clone https://github.com/3060226349kk-cmd/scribe.git` |
-| [humanizer](https://github.com/3060226349kk-cmd/humanizer) | `3060226349kk-cmd/humanizer` | Validation chain: 4-dimension check (Fidelity/Naturalness/Grammar/AI Patterns) + adversarial self-review | `git clone https://github.com/3060226349kk-cmd/humanizer.git` |
-| [humanizer-zh](https://github.com/3060226349kk-cmd/humanizer-zh) | `3060226349kk-cmd/humanizer-zh` | Validation chain: Chinese AI-trace final review (24 rules) | `git clone https://github.com/3060226349kk-cmd/humanizer-zh.git` |
+| Skill | Official Source | Purpose | Install |
+|-------|----------------|---------|---------|
+| [superpowers](https://github.com/obra/superpowers) | `obra/superpowers` | Validation chain: `verification-before-completion` | `cd ~/.claude/skills/ && git clone https://github.com/obra/superpowers.git` |
+| scribe | [Claude Code built-in](https://docs.anthropic.com/en/docs/claude-code/plugins) | Validation chain: `scribe:prose-reviewer` (AI-isms/translationese audit) | Ships with Claude Code, no extra install needed |
+| [humanizer](https://github.com/blader/humanizer) | `blader/humanizer` | Validation chain: 4-dimension check (Fidelity/Naturalness/Grammar/AI Patterns) + adversarial self-review | `cd ~/.claude/skills/ && wget -O SKILL.md https://raw.githubusercontent.com/blader/humanizer/main/SKILL.md` |
+| humanizer-zh | Derived from `blader/humanizer` (Chinese adaptation) | Validation chain: Chinese AI-trace final review (24 rules) | Same as `humanizer`, with translated Chinese rules |
 
 > jp-zh-max's base translation workflow (Phases 0-6) runs without these skills, but the validation chain (Phase 7) and methodology-enhanced phases (-0.5/0/1/2/3/5) require them.
 >
