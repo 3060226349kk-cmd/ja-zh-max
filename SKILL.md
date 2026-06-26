@@ -2,9 +2,9 @@
 name: jp-zh-max
 description: >-
   Use when the user wants 日译中 / 日译汉 / Japanese to Chinese / translate
-  Japanese, or to polish translationese out of a Chinese draft. Also when
+  Japanese, or to remove translationese from a Chinese draft. Also when
   producing 日中对译 bilingual output, or translating full-length Japanese
-  books/articles/news. Not for 中译日, pure Chinese writing polish, or
+  books/articles/news. Not for 中译日, pure Chinese writing refinement, or
   single-word lookups.
 license: MIT
 version: 3.3.0
