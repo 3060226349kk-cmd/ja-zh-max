@@ -1,11 +1,11 @@
-# jp-zh-max — 日译汉翻译润色 Claude Code Skill
+# jp-zh-max — 日译汉翻译 Claude Code Skill
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skill-9cf)](https://docs.anthropic.com/en/docs/claude-code)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Release](https://img.shields.io/badge/release-v3.3.0-blue)](https://github.com/3060226349kk-cmd/ja-zh-max/releases/latest)
 [![Version](https://img.shields.io/badge/version-3.3.0)](SKILL.md)
 
-[🇨🇳 中文](#jp-zh-max--日译汉翻译润色-claude-code-skill) · [🇬🇧 English](#jp-zh-max--japanesechinese-translation-polish-for-claude-code)
+[🇨🇳 中文](#jp-zh-max--日译汉翻译-claude-code-skill) · [🇬🇧 English](#jp-zh-max--japanesechinese-translation-for-claude-code)
 
 > 日文→中文翻译与润色。9 阶段工作流 + 高宁《日汉翻译教程》20 个蒸馏技能 + 4 层校验链。
 > 专为 Claude Code 设计，输出日中对照译文。
@@ -339,7 +339,7 @@ jp-zh-max/
 
 MIT License — 详见 [LICENSE](LICENSE)。
 
-[↑ 回到顶部](#jp-zh-max--日译汉翻译润色-claude-code-skill) · [🇬🇧 English](#jp-zh-max--japanesechinese-translation-polish-for-claude-code)
+[↑ 回到顶部](#jp-zh-max--日译汉翻译-claude-code-skill) · [🇬🇧 English](#jp-zh-max--japanesechinese-translation-for-claude-code)
 
 ---
 
@@ -684,4 +684,4 @@ The validation pipeline's `verification-before-completion` step is powered by [S
 
 MIT License — see [LICENSE](LICENSE).
 
-[↑ Back to top](#jp-zh-max--japanesechinese-translation-polish-for-claude-code) · [🇨🇳 中文](#jp-zh-max--日译汉翻译润色-claude-code-skill)
+[↑ Back to top](#jp-zh-max--japanesechinese-translation-for-claude-code) · [🇨🇳 中文](#jp-zh-max--日译汉翻译-claude-code-skill)
