@@ -345,13 +345,13 @@ MIT License — 详见 [LICENSE](LICENSE)。
 
 ---
 
-# jp-zh-max — Japanese→Chinese Translation Polish for Claude Code
+# jp-zh-max — Japanese→Chinese Translation for Claude Code
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skill-9cf)](https://docs.anthropic.com/en/docs/claude-code)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Version](https://img.shields.io/badge/version-3.3.0)](SKILL.md)
 
-> Japanese→Chinese translation and polish. 9-stage workflow + 20 distilled skills from Gao Ning's *Japanese-Chinese Translation Course* + 4-step validation pipeline.
+> Japanese→Chinese translation. 9-stage workflow + 20 distilled skills from Gao Ning's *Japanese-Chinese Translation Course* + 4-step validation pipeline.
 > Designed for Claude Code, outputs bilingual parallel text.
 >
 > 📊 [Full workflow diagram (with validation chain)](ultra/WORKFLOW.md)
