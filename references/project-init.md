@@ -12,7 +12,7 @@
 ```python
 import os, shutil
 
-src_dir = r'C:\Users\<用户名>\Downloads'   # ← 替换为实际下载路径
+src_dir = r'C:\Users\Lilipuut\Downloads'
 book_name = '《项目书籍名称》'           # ← 替换为实际书名
 project_dir = os.path.join(src_dir, book_name)
 source_dir = os.path.join(project_dir, 'source')

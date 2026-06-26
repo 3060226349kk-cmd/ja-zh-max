@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""剥夺版本标记 + 删除 AI 处理标记 + 增加译者署名 + 剥离子代理流程残留。
+"""剥夺版本标记 + 删除 AI 处理标记 + 增加译者署名 + 剥离子代理流程残留 + 清理 ultra 诊断记录。
 
 jp-zh / en-zh 翻译管线 — 阶段 8 强制前置门禁。
 用法: python3 strip-version-markers.py <对照文件.md>
@@ -45,6 +45,19 @@ AGENT_RESIDUE_BLOCKS = [
     r'(?:^|\n)#+\s*(?:翻訳完了サマリー|翻译完成总结)\s*\n.*?(?=\n#+\s|\Z)',
 ]
 
+# ── ultra 诊断记录模式（jp-zh-max stage 8A §1 扩展清理） ──
+ULTRA_DIAG_INLINE = [
+    # HTML 注释型诊断
+    r'<!--\s*(?:修辞类型[：:]|三阶段[：:]|多译案[：:]|回译诊断[：:]|ultra[：:]).*?-->',
+    # 内联诊断标记行（整行删除）
+    r'^\s*(?:修辞类型标注|三阶段评级|多译案候选|回译诊断差异|修辞处理决策)[：:]\s*.*$',
+]
+
+ULTRA_DIAG_BLOCKS = [
+    # markdown 诊断段落标题 + 内容（直到空行或下一标题）
+    r'(?:^|\n)#+\s*(?:多译案候选列表|回译诊断差异记录|修辞类型标注汇总|三阶段评级记录|修辞意识发展评定)\s*\n.*?(?=\n\n|\n#|\Z)',
+]
+
 # 检查是否为 blockquote 行（不动）
 def _is_blockquote(line):
     return line.lstrip().startswith('>')
@@ -61,7 +74,8 @@ def strip_and_attrib(filepath, translator_line="**译者：Lilipuut + Claude**")
 
     # ── 2. 剥夺版本标记 ──
     # 匹配: [v1] [v2·S] [v2·W] [v2·A] [v2·∅] [v3] [v3·Q✓]
-    version_re = re.compile(r'\s*\[v[123](?:·[SWA∅]|·Q✓)?\]')
+    # 及 jp-zh-max 扩展版记: [v2·W·语域] [v2·W·辞书] [v2·W·理性感性] [v2·S·多译案] 等
+    version_re = re.compile(r'\s*\[v[123](?:·[^\]]+)?\]')
 
     lines = text.split('\n')
     stripped = 0
@@ -115,6 +129,20 @@ def strip_and_attrib(filepath, translator_line="**译者：Lilipuut + Claude**")
     # 4c. 清除因删除残留行产生的连续空行（>=3 → 2）
     text = re.sub(r'\n{3,}', '\n\n', text)
 
+    # ── 5. 清理 ultra 诊断记录（jp-zh-max stage 8A §1 扩展清理） ──
+    hyper_diag_removed = 0
+    # 5a. 移除整块 ultra 诊断 section
+    for block_pat in ULTRA_DIAG_BLOCKS:
+        matches = list(re.finditer(block_pat, text, flags=re.DOTALL))
+        hyper_diag_removed += len(matches)
+        text = re.sub(block_pat, '', text, flags=re.DOTALL)
+    # 5b. 逐行/逐注释删除内联 ultra 诊断
+    for pat in ULTRA_DIAG_INLINE:
+        matches = list(re.finditer(pat, text, flags=re.DOTALL | re.MULTILINE))
+        hyper_diag_removed += len(matches)
+        text = re.sub(pat, '', text, flags=re.DOTALL | re.MULTILINE)
+    text = re.sub(r'\n{3,}', '\n\n', text)
+
     # ── 写回 ──
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(text)
@@ -123,6 +151,7 @@ def strip_and_attrib(filepath, translator_line="**译者：Lilipuut + Claude**")
     print(f'[完成] 版本标记清除: {stripped} 处')
     print('[完成] text-profile 注释块已移除')
     print(f'[完成] AI 流程残留清除: {residue_removed} 行')
+    print(f'[完成] ultra 诊断记录清除: {hyper_diag_removed} 块')
     print(f'[状态] 内容变更: {"是" if changed else "否（仅元数据操作）"}')
 
     return stripped
