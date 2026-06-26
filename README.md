@@ -2,7 +2,8 @@
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skill-9cf)](https://docs.anthropic.com/en/docs/claude-code)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
-[![Version](https://img.shields.io/badge/version-3.2.0)](SKILL.md)
+[![Release](https://img.shields.io/badge/release-v3.3.0-blue)](https://github.com/3060226349kk-cmd/ja-zh-max/releases/latest)
+[![Version](https://img.shields.io/badge/version-3.3.0)](SKILL.md)
 
 [🇨🇳 中文](#jp-zh-max--日译汉翻译润色-claude-code-skill) · [🇬🇧 English](#jp-zh-max--japanese→chinese-translation-polish-for-claude-code)
 
@@ -348,7 +349,7 @@ MIT License — 详见 [LICENSE](LICENSE)。
 
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Skill-9cf)](https://docs.anthropic.com/en/docs/claude-code)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
-[![Version](https://img.shields.io/badge/version-3.2.0)](SKILL.md)
+[![Version](https://img.shields.io/badge/version-3.3.0)](SKILL.md)
 
 > Japanese→Chinese translation and polish. 9-stage workflow + 20 distilled skills from Gao Ning's *Japanese-Chinese Translation Course* + 4-step validation pipeline.
 > Designed for Claude Code, outputs bilingual parallel text.
