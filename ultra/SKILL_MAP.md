@@ -9,20 +9,20 @@
 
 | # | 文件 | Read 路径 |
 |---|------|-----------|
-| 1 | INDEX | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\INDEX.md` |
-| 2 | 翻译意识 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\翻译意识\SKILL.md` |
-| 3 | 反孤句原则 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\反孤句原则\SKILL.md` |
-| 4 | 审美制约机制 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\审美制约机制\SKILL.md` |
-| 5 | 宏观到微观路径 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\宏观到微观路径\SKILL.md` |
-| 6 | 宏观把握微观把握 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\宏观把握微观把握\SKILL.md` |
-| 7 | 理解是技巧之母 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\理解是技巧之母\SKILL.md` |
-| 8 | 译得好回归译得对 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\译得好回归译得对\SKILL.md` |
-| 9 | 语境适切原则 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\语境适切原则\SKILL.md` |
-| 10 | 大众语境个人语境 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\大众语境个人语境\SKILL.md` |
-| 11 | 辞书活用与词义 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\辞书活用与词义\SKILL.md` |
-| 12 | 理性把握感性把握 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\理性把握感性把握\SKILL.md` |
-| 13 | 缩扩句法 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\缩扩句法\SKILL.md` |
-| 14 | 后推法 | `C:\Users\Lilipuut\.claude\skills\jp-zh-ultra\后推法\SKILL.md` |
+| 1 | INDEX | `~/.claude/skills/jp-zh-ultra\INDEX.md` |
+| 2 | 翻译意识 | `~/.claude/skills/jp-zh-ultra\翻译意识\SKILL.md` |
+| 3 | 反孤句原则 | `~/.claude/skills/jp-zh-ultra\反孤句原则\SKILL.md` |
+| 4 | 审美制约机制 | `~/.claude/skills/jp-zh-ultra\审美制约机制\SKILL.md` |
+| 5 | 宏观到微观路径 | `~/.claude/skills/jp-zh-ultra\宏观到微观路径\SKILL.md` |
+| 6 | 宏观把握微观把握 | `~/.claude/skills/jp-zh-ultra\宏观把握微观把握\SKILL.md` |
+| 7 | 理解是技巧之母 | `~/.claude/skills/jp-zh-ultra\理解是技巧之母\SKILL.md` |
+| 8 | 译得好回归译得对 | `~/.claude/skills/jp-zh-ultra\译得好回归译得对\SKILL.md` |
+| 9 | 语境适切原则 | `~/.claude/skills/jp-zh-ultra\语境适切原则\SKILL.md` |
+| 10 | 大众语境个人语境 | `~/.claude/skills/jp-zh-ultra\大众语境个人语境\SKILL.md` |
+| 11 | 辞书活用与词义 | `~/.claude/skills/jp-zh-ultra\辞书活用与词义\SKILL.md` |
+| 12 | 理性把握感性把握 | `~/.claude/skills/jp-zh-ultra\理性把握感性把握\SKILL.md` |
+| 13 | 缩扩句法 | `~/.claude/skills/jp-zh-ultra\缩扩句法\SKILL.md` |
+| 14 | 后推法 | `~/.claude/skills/jp-zh-ultra\后推法\SKILL.md` |
 
 ## 阶段级 Invoke
 
