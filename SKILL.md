@@ -5,7 +5,7 @@ description: >-
   Japanese, or to polish translationese out of a Chinese draft. Also when
   producing 日中对译 bilingual output, or translating full-length Japanese
   books/articles/news. Not for 中译日, pure Chinese writing polish, or
-  single-word lookups. Light edition: jp-zh.
+  single-word lookups.
 license: MIT
 version: 3.3.0
 tags: [translation, japanese, japanese-to-chinese, 日译汉, 日译中, 润色, 日中对译, localization]
