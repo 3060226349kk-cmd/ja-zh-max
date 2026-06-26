@@ -8,26 +8,15 @@ description: >-
   single-word lookups. Light edition: jp-zh.
 license: MIT
 version: 3.3.0
-tags: [translation, japanese, japanese-to-chinese, 日译汉, 日译中, 润色, 日中对译, localization, ultra]
+tags: [translation, japanese, japanese-to-chinese, 日译汉, 日译中, 润色, 日中对译, localization]
 allowed-tools: Read Write Edit Bash
 ---
 
-# jp-zh-max · 日译汉翻译润色（Ultra 增强版）
+# jp-zh-max · 日译汉翻译 Claude Code Skill
 
-> **⚡ jp-zh-max = jp-zh + 《日汉翻译教程》20 个蒸馏技能**
->
-> 本 skill 是 [jp-zh](../jp-zh/SKILL.md) 的 ultra 增强版。原版 9 阶段工作流完全保留，
-> 在此基础上集成了高宁《日汉翻译教程》(上外教社, 2008) 经 book2skill 蒸馏的 20 个技能。
-> 详见 [设计文档](../../../docs/superpowers/specs/2026-06-25-jp-zh-ultra-integration-design.md)
-> 和 [ultra 技能索引](../jp-zh-ultra/INDEX.md)。
->
-> **双版本选择：**
-> - **jp-zh** — 轻量版，9 阶段工作流，适合短篇翻译（< 2,000 字）或快速出稿
-> - **jp-zh-max**（本 skill）— ultra 增强版，每个阶段有方法论技能加持，适合章节级以上全文翻译
->
-> **不适用场景（跳回 jp-zh）：** 聊天小段翻译 / 硬文本（法律/专利，自由度 1-3）/ 用户要求快速出稿
+> **jp-zh-max** 集成了高宁《日汉翻译教程》(上外教社, 2008) 经 book2skill 蒸馏的 20 个技能。
 
-把日文译成**地道中文**并产出**日中对译**译文。核心方法论基于高宁《日汉翻译教程》（上海外语教育出版社，2008）的系统理论，并继承叶子南英译汉框架的 7 阶段工作流。**统领原则：读者中心**——每个翻译决策最终追溯到一个问题：「这个中文读者是谁，在什么语境下读？」。日→中最致命的错误是把日语的 SOV 形合结构、连体修饰长链、和製漢語字形直接迁移进汉语造成翻译腔。好译文 = **以读者为中心、按文本类型调节归化尺度、发挥汉语意合优势、兼顾音韵节奏**。
+把日文译成**地道中文**并产出**日中对译**译文。核心方法论基于高宁《日汉翻译教程》（上海外语教育出版社，2008）的系统理论，工作流整合了翻译意识、结构句法、选词润色、文体类型四个维度。**统领原则：读者中心**——每个翻译决策最终追溯到一个问题：「这个中文读者是谁，在什么语境下读？」。日→中最致命的错误是把日语的 SOV 形合结构、连体修饰长链、和製漢語字形直接迁移进汉语造成翻译腔。好译文 = **以读者为中心、按文本类型调节归化尺度、发挥汉语意合优势、兼顾音韵节奏**。
 
 ## 方法论基石（高宁，绪论·第三章）
 
@@ -190,33 +179,6 @@ B3 — 合并与整书串行校验
 
 **整书校验链：** 合并完成后，执行阶段 7 完整版（含步骤 0 一致性预检 + humanizer 分层策略——详见阶段 7）。
 
-### 阶段 -0.5 — Ultra 预读取批 ★ jp-zh-max 专属
-
-> ⚠ **准入：** 阶段 -1 归位验证通过。
-> ✅ **准出：** 14 个 ultra SKILL.md 全部已 Read。未完成 = 停止，不可进入阶段 0。
-
-**目的：** 将《日汉翻译教程》20 个蒸馏技能的完整方法论一次性载入上下文，建立全流程方法论地基。后续各阶段的正式 invoke 在此地基上执行，减少上下文重建成本。
-
-**执行：** 用 `Read` 工具依次读取以下 14 个文件（INDEX.md 必须第一个；路径相对 `$SKILL_DIR`）：
-
-1. `$SKILL_DIR/../jp-zh-ultra/INDEX.md`
-2. `$SKILL_DIR/../jp-zh-ultra/翻译意识/SKILL.md`
-3. `$SKILL_DIR/../jp-zh-ultra/反孤句原则/SKILL.md`
-4. `$SKILL_DIR/../jp-zh-ultra/审美制约机制/SKILL.md`
-5. `$SKILL_DIR/../jp-zh-ultra/宏观到微观路径/SKILL.md`
-6. `$SKILL_DIR/../jp-zh-ultra/宏观把握微观把握/SKILL.md`
-7. `$SKILL_DIR/../jp-zh-ultra/理解是技巧之母/SKILL.md`
-8. `$SKILL_DIR/../jp-zh-ultra/译得好回归译得对/SKILL.md`
-9. `$SKILL_DIR/../jp-zh-ultra/语境适切原则/SKILL.md`
-10. `$SKILL_DIR/../jp-zh-ultra/大众语境个人语境/SKILL.md`
-11. `$SKILL_DIR/../jp-zh-ultra/辞书活用与词义/SKILL.md`
-12. `$SKILL_DIR/../jp-zh-ultra/理性把握感性把握/SKILL.md`
-13. `$SKILL_DIR/../jp-zh-ultra/缩扩句法/SKILL.md`
-14. `$SKILL_DIR/../jp-zh-ultra/后推法/SKILL.md`
-
-> ⚠ **批量读取后可继续阶段 0，不必等待逐一确认。** 读取完成 = 本阶段准出满足。
-
-**短篇优化（< 2,000 字）：** 仅读 #1 (INDEX) + #2-4 (核心框架 3 个) + #5-6 (宏观方法论 2 个) + #9 (语境适切)，共 7 个文件。仍不可完全跳过预读取。
 
 ## 工作流（严格按序；每段译文都要走完润色，不是初译就交）
 
