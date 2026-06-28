@@ -68,7 +68,7 @@ print(f'EPUB => {epub_path}')
 用 Kindle Previewer 3 内置 kindlegen 从 EPUB 转换：
 
 ```bash
-KINDLEGEN="$HOME/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/kindlegen.exe"  # 修改为实际路径
+KINDLEGEN="/c/Users/Lilipuut/AppData/Local/Amazon/Kindle Previewer 3/lib/fc/bin/kindlegen.exe"
 "$KINDLEGEN" "<名称>.epub"
 ```
 
